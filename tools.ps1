@@ -50,7 +50,8 @@ switch ($Action.ToLower()) {  # Makes comparison case-insensitive
     "configure" { configure }
     "configure_debug"{ configure -Debug }
     "build" { build }
-    "run" { run_Testing }
+    "run_Extension" { run_ExtensionTest }
+    "run_Testing" { run_Testing }
     "full_build" {
         clean
         configure

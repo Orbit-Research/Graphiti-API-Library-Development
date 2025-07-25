@@ -7,7 +7,7 @@ int main()
     TestHarness* testHarness = new TestHarness();
 
     //Run all tests
-    //testHarness->runTestsFromFile(alltestsfile);
+    testHarness->runTestsFromFile(alltestsfile);
 
     //Rerun failed
     //testHarness->runTestsFromFile(failedfile);
@@ -18,7 +18,7 @@ int main()
     //Single test
     //testHarness->runTest("update_Single_Row_Functionality");
 
-    testHarness->runTestsFromFile(imageTests);
+    //testHarness->runTestsFromFile(imageTests);
 
     return 0;
 }
