@@ -1,3 +1,0 @@
-cmake -B build -DCMAKE_PREFIX_PATH="$env:USERPROFILE\.local"
-
-cmake --build build
