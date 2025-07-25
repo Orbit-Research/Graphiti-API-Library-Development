@@ -117,7 +117,12 @@ bool Tests::get_Device_Name_Correctness() {
     return sleepAndTest("Graphiti");
 }
 
-//Display Tests (Test success/failure is obvserved)
+/*
+Display Tests (Test success/failure is obvserved)
+
+These tests return true since the functionality must be physically observed on the device
+*/
+
 
 bool Tests::update_Display_Functionality() {
     UpdateDisplay();
@@ -152,7 +157,12 @@ bool Tests::update_Single_Column_Functionality() {
     return true;
 }
 
-//Display Tests
+//Status Tests
+
+/*
+These tests assume that the functions that put pins up function 
+correctly so that the status functions can be tested properly
+*/
 
 bool Tests::get_ALL_Pixels_Position_Status_Correctness() {
     return statusFunctionResponse(
@@ -190,6 +200,14 @@ bool Tests::get_Single_Column_Pixels_Position_Status_Correctness() {
 
 //Key Test
 
+/**
+ * @brief Next Key Event Functionality
+ * 
+ * As a functinoality test the result must be observed
+ * 
+ * @return true 
+ * @return false 
+ */
 bool Tests::get_Next_KeyEvent_Functionality() {
     std::cout << "get_Next_KeyEvent_Functionality" << std::endl;
 
@@ -205,8 +223,41 @@ bool Tests::get_Next_KeyEvent_Functionality() {
     return true;
 }
 
+/**
+ * @brief One pixel key function
+ * 
+ * Runs in the key loop of the test
+ * If the Select button is pressed the test ends as the loop ends
+ * 
+ * @param keyEvent 
+ * @param parameters 
+ */
+void Tests::OnePixel_KeyFunction(
+    const std::set<std::string>& keyEvent,
+    void* parameters
+) {
+    if(keyEvent.contains("1")){
+        std::cout << "Key Event 1 on Main found" << std::endl;
+        graphiti->updateSinglePixel(10, 30, 2, 0); //Put up
+    } else {
+        graphiti->updateSinglePixel(10, 30, 0, 0); //Put down
+    }
+
+    if(keyEvent.contains("Select")) {
+        loopCondition = false; //Ends the loop
+    }
+}
+
 //Draw Test
 
+/**
+ * @brief Tests the Next Draw Event Functionality
+ * 
+ * Calls the PrintDraw_DrawFunction 
+ * 
+ * @return true 
+ * @return false 
+ */
 bool Tests::get_Next_Draw_Event_Functionality() {
     std::cout << "get_Next_Draw_Event_Functionality" << std::endl;
 
@@ -218,6 +269,37 @@ bool Tests::get_Next_Draw_Event_Functionality() {
     );
 
     return true;
+}
+
+/**
+ * @brief PrintDraw_DrawFunction
+ * 
+ * Outputs the row, column, height, and blink rate of pins in the draw event
+ * Draw test ends when the user has drawn to the bottom right corerner
+ * 
+ * @param drawEvent 
+ * @param parameters 
+ */
+void Tests::PrintDraw_DrawFunction(
+    const Graphiti_API::DrawEvent& drawEvent, 
+    void* parameters
+) {
+    Graphiti_API::PinInfo pin;
+
+    for (size_t i = 0; i < drawEvent.length; i++)
+    {
+        pin = drawEvent.pins[i];
+        std::cout 
+            << "row: " << pin.rowID << " "
+            << "col: " << pin.columnID << " "
+            << "height: " << pin.height << " "
+            << "blinkRate: " << pin.blinkRate << std::endl;
+
+        if(drawEvent.pins[i].rowID == 40 
+            and drawEvent.pins[i].columnID == 60 ){
+            loopCondition = false;
+        }
+    }
 }
 
 //Show Message Test
@@ -241,6 +323,14 @@ bool Tests::set_Cursor_Functionality() {
 
 //Image Test
 
+/**
+ * @brief Sends an image of the headphones to the Graphiti
+ * 
+ * Test fails if a crash occurs
+ * 
+ * @return true 
+ * @return false 
+ */
 bool Tests::send_Image_Functionality() {
     const std::string name = "headphones_jpg.jpg";
 
@@ -463,43 +553,5 @@ bool Tests::statusFunctionResponse(
         auto display = displayOption.value();
         //printVectorHex(display);
         return expected == display;
-    }
-}
-
-void Tests::OnePixel_KeyFunction(
-    const std::set<std::string>& keyEvent,
-    void* parameters
-) {
-    if(keyEvent.contains("1")){
-        std::cout << "Key Event 1 on Main found" << std::endl;
-        graphiti->updateSinglePixel(10, 30, 2, 0); //Put up
-    } else {
-        graphiti->updateSinglePixel(10, 30, 0, 0); //Put down
-    }
-
-    if(keyEvent.contains("Select")) {
-        loopCondition = false; //Ends the loop
-    }
-}
-
-void Tests::PrintDraw_DrawFunction(
-    const Graphiti_API::DrawEvent& drawEvent, 
-    void* parameters
-) {
-    Graphiti_API::PinInfo pin;
-
-    for (size_t i = 0; i < drawEvent.length; i++)
-    {
-        pin = drawEvent.pins[i];
-        std::cout 
-            << "row: " << pin.rowID << " "
-            << "col: " << pin.columnID << " "
-            << "height: " << pin.height << " "
-            << "blinkRate: " << pin.blinkRate << std::endl;
-
-        if(drawEvent.pins[i].rowID == 40 
-            and drawEvent.pins[i].columnID == 60 ){
-            loopCondition = false;
-        }
     }
 }

@@ -3,6 +3,10 @@
 #include <chrono>
 #include <Graphiti/Extension.hpp>
 
+/**
+ * @brief Class containing tests for test harness to run
+ * 
+ */
 class Tests {
 public:
     Tests();

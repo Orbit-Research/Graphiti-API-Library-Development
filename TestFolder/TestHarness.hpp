@@ -12,6 +12,9 @@
 #include <iostream>
 #include <filesystem>
 
+/*
+File names of more used files along with testDataDir which is the directory of the test text files
+*/
 inline const std::string alltestsfile = "Tests.txt";
 inline const std::string passedfile = "passedTests.txt";
 inline const std::string failedfile = "failedTests.txt";
@@ -23,6 +26,7 @@ inline const std::string imageTests = "ImageTests.txt";
 inline const std::string keyTests = "KeyTests.txt";
 inline const std::string statusTests = "StatusTests.txt";
 inline const std::string stringTests = "StringTests.txt";
+inline const std::string otherTests = "OtherTests.txt";
 
 namespace fs = std::filesystem;
 using std::endl;
@@ -31,19 +35,24 @@ using std::cout;
 
 #include "Tests.hpp"
 
+/**
+ * @brief Class that has a test harness for running the tests and keeping track of passed and failed tests 
+ * and allowing the passed and failed tests to be re run as they take from a file
+ * 
+ */
 class TestHarness {
 public:
 
     TestHarness();
 
     /**
-     * @brief Runs a single test
+     * @brief Runs a single test by name as a string
      * 
      * Outputs to passedTests and failedTests in TestData folder
      * 
      * Test must exist in testRegistry
      * 
-     * @param testName name of test
+     * @param testName name of test as a string
      */
     void runTest(const std::string& testName);
 
