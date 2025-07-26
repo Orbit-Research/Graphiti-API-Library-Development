@@ -8,7 +8,7 @@ C:\Users\Daniel\graphiti/include/Graphiti/API_VCP.hpp
 C:\Users\Daniel\graphiti/include/Graphiti/Connection/Connection.hpp
 C:\Users\Daniel\graphiti/include/Graphiti/Connection/Connection_HID.hpp
 C:\Users\Daniel\graphiti/include/Graphiti/Connection/Connection_VCP.hpp
-C:\Users\Daniel\graphiti/include/Graphiti/CWrapper/capi.hpp
+C:\Users\Daniel\graphiti/include/Graphiti/CWrapper/capi.h
 C:\Users\Daniel\graphiti/include/Graphiti/Extension.hpp
 C:\Users\Daniel\graphiti/include/Graphiti/ThreadSafeQueue.hpp
 C:\Users\Daniel\graphiti/lib/cmake/Graphiti/GraphitiConfig.cmake

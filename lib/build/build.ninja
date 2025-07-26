@@ -114,7 +114,7 @@ build cmake_object_order_depends_target_Graphiti_C: phony || cmake_object_order_
 
 build CMakeFiles/Graphiti_C.dir/src/CWrapper/capi.cpp.obj: CXX_COMPILER__Graphiti_C_unscanned_Release C$:/Users/Daniel/Visual$ Studio$ Code$ Projects/Graphiti_API_Library_0_1/lib/src/CWrapper/capi.cpp || cmake_object_order_depends_target_Graphiti_C
   CONFIG = Release
-  DEFINES = -DGraphiti_C_EXPORTS -D_WIN32_WINNT=0x0601
+  DEFINES = -DBUILDING_GRAPHITI_DLL -DGraphiti_C_EXPORTS -D_WIN32_WINNT=0x0601
   DEP_FILE = CMakeFiles\Graphiti_C.dir\src\CWrapper\capi.cpp.obj.d
   FLAGS = -O3 -DNDEBUG -std=gnu++23
   INCLUDES = -I"C:/Users/Daniel/Visual Studio Code Projects/Graphiti_API_Library_0_1/lib/include" -isystem C:/Users/Daniel/vcpkg/installed/x64-windows/include

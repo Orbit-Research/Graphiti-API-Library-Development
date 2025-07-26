@@ -41,6 +41,8 @@ target_include_directories(Graphiti_C PUBLIC
 
 target_link_libraries(Graphiti_C PRIVATE Graphiti)  # Link to C++ core
 
+target_compile_definitions(Graphiti_C PRIVATE BUILDING_GRAPHITI_DLL)
+
 # --- Install Rules (using GNUInstallDirs variables) ---
 install(TARGETS Graphiti Graphiti_C
     EXPORT GraphitiTargets

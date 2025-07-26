@@ -3,7 +3,7 @@
 #include <string>
 #include <cstring>
 
-#include <Graphiti/CWrapper/capi.hpp>
+#include <Graphiti/CWrapper/capi.h>
 #include <Graphiti/Extension.hpp>
 
 // Opaque handle = C++ class
@@ -30,13 +30,13 @@ extern "C" {
         handle->api.setConnection(static_cast<GraphitiConnection*>(connection));
     }
 
-    void graphiti_startUpVCP(GraphitiHandle* handle, const char* portName, 
+    bool graphiti_startUpVCP(GraphitiHandle* handle, const char* portName, 
         bool keyEventsBool, bool touchEventsBool
     ){
-        handle->api.startUpVCP(portName, keyEventsBool, touchEventsBool);
+        return handle->api.startUpVCP(portName, keyEventsBool, touchEventsBool);
     }
 
-    void graphiti_shutDownVCP(GraphitiHandle* handle, const char* portName, 
+    void graphiti_shutDownVCP(GraphitiHandle* handle, 
         bool keyEventsBool, bool touchEventsBool
     ){
         handle->api.shutDownVCP(keyEventsBool, touchEventsBool);
