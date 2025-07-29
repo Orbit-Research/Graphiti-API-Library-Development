@@ -136,7 +136,12 @@ Library containing API calls of the Graphiti by Orbit Research. Copyright © 202
         - CMakeLists for compiling the library in C++ and C
 
     - library.ps1
-        - Builds the library using Ninja in Release mode (not outputing informaiton related to debugging)
+        - Builds the library in Release mode (not outputing informaiton related to debugging)
+        - This file will compile the library by default using your generator and compiler
+        - If you would like to specify your Generator or compiler add them as parameters like in this example:
+            .\library.ps1 -Generator "Ninja" -Compiler "g++"
+        - To run this normally run: .\library.ps1
+        - This will build the library under your user profile in a folder called graphiti
 
 - main
     - Folder for running Code withe the uncompiled library localy for testing

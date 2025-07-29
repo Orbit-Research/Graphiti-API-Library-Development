@@ -1,8 +1,7 @@
 cmake_minimum_required(VERSION 3.15)
 set(CMAKE_CXX_STANDARD 23)
 
-set(CMAKE_TOOLCHAIN_FILE "C:/Users/Daniel/vcpkg/scripts/buildsystems/vcpkg.cmake")
-set(CMAKE_CXX_COMPILER "g++")
+set(CMAKE_TOOLCHAIN_FILE "$ENV{USERPROFILE}/vcpkg/scripts/buildsystems/vcpkg.cmake")
 add_definitions(-D_WIN32_WINNT=0x0601)
 
 project(Graphiti VERSION 1.0.0 LANGUAGES CXX C)  # Add C support

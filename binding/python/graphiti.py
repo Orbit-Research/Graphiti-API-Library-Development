@@ -37,14 +37,14 @@ class DrawEvent_C(Structure):
     ]
 
 class Graphiti:
-    def __init__(self, dll_dir: str, path: Optional[Union[str, Path]] = 'libGraphiti_C.dll'):
+    def __init__(self, dll_dir: str, ):
         if isinstance(path, Path):
             path = str(path)
         os.add_dll_directory(dll_dir)
         try:
             self._lib = CDLL(path)
         except Exception as e:
-            print(f"Failed to load DLL: {e}")
+            raise RuntimeError(f"Failed to load DLL: {e}")
         # self._setup_types()
         
     def _setup_types(self):

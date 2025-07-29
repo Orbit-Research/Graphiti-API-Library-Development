@@ -1,7 +1,23 @@
 # Commands for building library with library CMakeLists.txt
 Remove-Item -Recurse -Force .\build\
 
-cmake -S . -B build -G "Ninja" -DCMAKE_BUILD_TYPE=Release
+param(
+    [string]$Generator,
+    [string]$Compiler
+)
+
+$cmakeArgs = @("-S", ".", "-B", "build", "-DCMAKE_BUILD_TYPE=Release")
+
+if ($Generator) {
+    $cmakeArgs += "-G"
+    $cmakeArgs += $Generator
+}
+
+if ($Compiler) {
+    $cmakeArgs += "-DCMAKE_CXX_COMPILER=$Compiler"
+}
+
+cmake @cmakeArgs
 
 cmake --build build
 
@@ -9,7 +25,6 @@ cmake --build build
 cmake --install build --prefix "$env:USERPROFILE\graphiti"
 
 #Add graphiti to PATH
-
 $graphitiPath = "$env:USERPROFILE\graphiti"
 $envPath = [Environment]::GetEnvironmentVariable("PATH", "User")
 

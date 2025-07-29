@@ -1,11 +1,12 @@
 # Define user vcpkg path
 $UserPath = "$env:USERPROFILE\vcpkg"
 
-# Step 1: Clone vcpkg
-git clone https://github.com/microsoft/vcpkg.git $UserPath
-
-# Step 2: Bootstrap vcpkg
-& "$UserPath\bootstrap-vcpkg.bat"
+if (-not (Test-Path "$UserPath\vcpkg.exe")) {
+    git clone https://github.com/microsoft/vcpkg.git $UserPath
+    & "$UserPath\bootstrap-vcpkg.bat"
+} else {
+    Write-Host "vcpkg already exists, skipping clone/bootstrap."
+}
 
 # Step 3: Integrate with MSBuild
 & "$UserPath\vcpkg.exe" integrate install
