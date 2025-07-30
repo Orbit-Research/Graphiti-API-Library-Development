@@ -1,10 +1,10 @@
-# Commands for building library with library CMakeLists.txt
-Remove-Item -Recurse -Force .\build\
-
 param(
     [string]$Generator,
     [string]$Compiler
 )
+
+# Commands for building library with library CMakeLists.txt
+Remove-Item -Recurse -Force .\build\
 
 $cmakeArgs = @("-S", ".", "-B", "build", "-DCMAKE_BUILD_TYPE=Release")
 

@@ -17,7 +17,7 @@ extern "C" {
         return new GraphitiHandle();
     }
 
-    GraphitiHandle* graphiti_create_with_connection(void* connection) {
+    GraphitiHandle* graphiti_createWithConnection(void* connection) {
         return new GraphitiHandle{static_cast<GraphitiConnection*>(connection)};
     }
 

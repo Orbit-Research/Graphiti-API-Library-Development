@@ -1,15 +1,10 @@
 # test.py
 from graphiti import Graphiti
-from pathlib import Path
-
-dll_dir = r"C:/Users/Daniel/graphiti/bin"
+import os
 
 # Load the library
-dll_path = Path(r"C:/Users/Daniel/graphiti/bin/libGraphiti_C.dll")
-print(f"Looking for DLL at: {dll_path}")
-print(f"DLL exists: {dll_path.exists()}")
 
-handle = Graphiti(dll_dir, dll_path)
+handle = Graphiti()
 
 handle.graphiti_create()
 

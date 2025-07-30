@@ -1,10 +1,9 @@
 from ctypes import (
     CDLL, c_void_p, c_bool, c_int, c_char_p,
-    POINTER, Structure, c_uint8, c_char, create_string_buffer,
-    byref, cast
+    POINTER, Structure, c_uint8,
+    byref, util
 )
 from typing import Optional, List, Dict, Union
-from pathlib import Path
 import os
 
 class DisplayStatusEvent_C(Structure):
@@ -37,15 +36,16 @@ class DrawEvent_C(Structure):
     ]
 
 class Graphiti:
-    def __init__(self, dll_dir: str, ):
-        if isinstance(path, Path):
-            path = str(path)
+    def __init__(self):
+        dll_dir = os.path.dirname(os.path.abspath(__file__))
+        print("dll_dir: " + dll_dir)
         os.add_dll_directory(dll_dir)
+        dll_path = os.path.join(dll_dir, "libGraphiti_C.dll")
         try:
-            self._lib = CDLL(path)
+            self._lib = CDLL(dll_path,winmode=0)
         except Exception as e:
             raise RuntimeError(f"Failed to load DLL: {e}")
-        # self._setup_types()
+        self._setup_types()
         
     def _setup_types(self):
         # Handle Management
