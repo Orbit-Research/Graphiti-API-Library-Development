@@ -67,7 +67,7 @@ extern "C" {
         handle->api.stopResponseThread();
     }
 
-    char* graphiti_getNextOutputEvent(GraphitiHandle* handle, char* out, size_t max_len) {
+    void graphiti_getNextOutputEvent(GraphitiHandle* handle, char* out, size_t max_len) {
         if (!out || max_len == 0) return;
 
         auto event = handle->api.getNextOutputEvent();
@@ -111,7 +111,7 @@ extern "C" {
         return i;
     }
 
-    char* graphiti_getNextGestureEvent(GraphitiHandle* handle, char* out, size_t max_len) {
+    void graphiti_getNextGestureEvent(GraphitiHandle* handle, char* out, size_t max_len) {
         if (!out || max_len == 0) return;
 
         auto event = handle->api.getNextOutputEvent();

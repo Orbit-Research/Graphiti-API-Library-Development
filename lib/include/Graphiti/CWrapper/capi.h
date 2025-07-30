@@ -40,13 +40,13 @@ GRAPHITI_API void graphiti_sleep(GraphitiHandle* handle, int time);
 GRAPHITI_API void graphiti_startResponseThread(GraphitiHandle* handle);
 GRAPHITI_API void graphiti_stopResponseThread(GraphitiHandle* handle);
 
-GRAPHITI_API char* graphiti_getNextOutputEvent(GraphitiHandle* handle, char* out, size_t max_len);
+GRAPHITI_API void graphiti_getNextOutputEvent(GraphitiHandle* handle, char* out, size_t max_len);
 
 GRAPHITI_API int graphiti_getNextDisplayStatusEvent(GraphitiHandle* handle, int* buffer, int max_len);
 
 GRAPHITI_API int graphiti_getNextKeyEvent(GraphitiHandle* handle, char** buffer, int max_len);
 
-GRAPHITI_API char* graphiti_getNextGestureEvent(GraphitiHandle* handle, char* out, size_t max_len);
+GRAPHITI_API void graphiti_getNextGestureEvent(GraphitiHandle* handle, char* out, size_t max_len);
 
 // ---- Draw Event ----
 typedef struct {

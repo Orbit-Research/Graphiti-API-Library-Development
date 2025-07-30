@@ -1,3 +1,7 @@
+# Delete ccurrent graphiti lib files
+Write-Error "Deleting libGraphiti_C.dll, libGraphiti.dll"
+rm libGraphiti_C.dll, libGraphiti.dll -ErrorAction SilentlyContinue
+
 # Path to source DLLs
 $sourceDir = Join-Path $env:USERPROFILE "graphiti\bin"
 
