@@ -648,7 +648,7 @@ void Graphiti_API::getSoftwareVersion() {
     Graphiti_IO_Write({ 0x01 });
 }
 
-void Graphiti_API::getHardWareVersion() {
+void Graphiti_API::getHardwareVersion() {
     Graphiti_IO_Write({ 0x02 });
 }
 

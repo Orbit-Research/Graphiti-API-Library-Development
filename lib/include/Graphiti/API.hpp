@@ -22,7 +22,17 @@
 #define ROW_COUNT 40
 #define COLUMN_COUNT 60
 
-class Graphiti_API {
+#ifdef _WIN32
+  #ifdef BUILDING_GRAPHITI_DLL
+    #define GRAPHITI_API __declspec(dllexport)
+  #else
+    #define GRAPHITI_API __declspec(dllimport)
+  #endif
+#else
+  #define GRAPHITI_API
+#endif
+
+class GRAPHITI_API Graphiti_API {
 public:
     /**
      * @brief Construct a new Graphiti_API object
@@ -187,7 +197,7 @@ public:
      * The 'Get Hardware Version' command retrieves the current version of the device
      * hardware.
      */
-    void getHardWareVersion();
+    void getHardwareVersion();
 
     /**
      * @brief 4.2.3 Get Unit Serial Number

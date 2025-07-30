@@ -10,7 +10,7 @@ $ScriptRoot = Split-Path -Parent $MyInvocation.MyCommand.Definition
 Push-Location "$ScriptRoot\lib"
 
 # Execute from inside lib folder to use lib CMakeLists.txt
-.\library.ps1 -Generator "Ninja" -Compiler "g++"
+.\library.ps1
 
 # Exit lib folder
 Pop-Location

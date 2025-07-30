@@ -14,6 +14,16 @@ int main() {
 
     Sleep(2000);
 
+    graphiti_getSoftwareVersion(graphiti);
+
+    Sleep(2000);
+
+    char* software_version = graphiti_getNextOutputEvent(graphiti);
+
+    printf(software_version);
+
+    Sleep(2000);
+
     graphiti_updateSinglePixel(graphiti, 10, 20, 2, 0);
 
     Sleep(2000);

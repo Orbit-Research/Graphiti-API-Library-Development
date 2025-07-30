@@ -83,7 +83,7 @@ bool Tests::get_Software_Version_Correctness() {
 }
 
 bool Tests::get_Hardware_Version_Correctness() {
-    graphiti->getHardWareVersion();
+    graphiti->getHardwareVersion();
     return sleepAndTest("MB 4E");
 }
 

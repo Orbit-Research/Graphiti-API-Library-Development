@@ -25,6 +25,9 @@ endif()
 # Create the library SHARED
 add_library(Graphiti SHARED ${GRAPHITI_SOURCES})
 
+target_compile_definitions(Graphiti PRIVATE BUILDING_GRAPHITI_DLL)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
 # Include directories for the library
 target_include_directories(Graphiti PUBLIC
     ${CMAKE_SOURCE_DIR}/lib/include/

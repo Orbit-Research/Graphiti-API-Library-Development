@@ -67,96 +67,79 @@ extern "C" {
         handle->api.stopResponseThread();
     }
 
-    char* graphiti_getNextOutputEvent(GraphitiHandle* handle) {
+    char* graphiti_getNextOutputEvent(GraphitiHandle* handle, char* out, size_t max_len) {
+        if (!out || max_len == 0) return;
+
         auto event = handle->api.getNextOutputEvent();
-        return event ? strdup(event->c_str()) : nullptr; // strdup = malloc + copy
+        if (event && !event->empty()) {
+            std::strncpy(out, event->c_str(), max_len - 1);
+            out[max_len - 1] = '\0';  // ensure null-termination
+        } else {
+            out[0] = '\0';  // write empty string
+        }
     }
 
-    void graphiti_freeString(char* str) {
-        free(str); // Matches strdup
-    }
+    int graphiti_getNextDisplayStatusEvent(GraphitiHandle* handle, int* buffer, int max_len) {
+        if (!buffer || max_len <= 0) return 0;
 
-    DisplayStatusEvent_C graphiti_getNextDisplayStatusEvent(GraphitiHandle* handle) {
-        DisplayStatusEvent_C result = {nullptr, 0, false};
         auto event = handle->api.getNextDisplayStatusEvent();
-        
-        if (event) {
-            result.has_value = true;
-            result.length = event->size();
-            result.data = new uint8_t[result.length];
-            memcpy(result.data, event->data(), result.length * sizeof(uint8_t));
-        }
-        
-        return result;
+        if (!event) return 0;
+
+        int count = std::min<int>(event->size(), max_len);
+        memcpy(buffer, event->data(), count * sizeof(int));
+        return count;
     }
 
-    void graphiti_freeDisplayStatusEvent(DisplayStatusEvent_C* event) {
-        if (event->data) {
-                delete[] event->data;
-                event->data = nullptr;
-            }
+    int graphiti_getNextKeyEvent(GraphitiHandle* handle, char** out_keys, int max_string_len) {
+        if (!handle || !out_keys || max_string_len <= 0)
+            return 0;
+
+        constexpr int MAX_KEYS = 14;
+
+        auto event = handle->api.getNextKeyEvent();  // std::optional<std::vector<std::string>>
+        if (!event)
+            return 0;
+
+        int i = 0;
+        for (const std::string& key : *event) {
+            if (i >= MAX_KEYS) break;
+            std::strncpy(out_keys[i], key.c_str(), max_string_len - 1);
+            out_keys[i][max_string_len - 1] = '\0';
+            ++i;
         }
 
-    KeyEvent_C graphiti_getNextKeyEvent(GraphitiHandle* handle) {
-        KeyEvent_C result = {nullptr, 0, false};
-        auto event = handle->api.getNextKeyEvent();
-        
-        if (event) {
-            result.has_value = true;
-            result.count = event->size();
-            result.keys = new char*[result.count];
-            
-            int i = 0;
-            for (const auto& key : *event) {
-                result.keys[i] = new char[key.size() + 1];
-                strcpy(result.keys[i], key.c_str());
-                i++;
-            }
-        }
-        
-        return result;
+        return i;
     }
 
-    void graphiti_freeKeyEvent(KeyEvent_C* event) {
-        if (event->keys) {
-            for (int i = 0; i < event->count; i++) {
-                delete[] event->keys[i];
-            }
-            delete[] event->keys;
-            event->keys = nullptr;
+    char* graphiti_getNextGestureEvent(GraphitiHandle* handle, char* out, size_t max_len) {
+        if (!out || max_len == 0) return;
+
+        auto event = handle->api.getNextOutputEvent();
+        if (event && !event->empty()) {
+            std::strncpy(out, event->c_str(), max_len - 1);
+            out[max_len - 1] = '\0';  // ensure null-termination
+        } else {
+            out[0] = '\0';  // write empty string
         }
     }
 
-    char* graphiti_getNextGestureEvent(GraphitiHandle* handle) {
-        auto event = handle->api.getNextGestureEvent();
-        return event ? strdup(event->c_str()) : nullptr; // strdup = malloc + copy
-    }//Uses free string
+    int graphiti_getNextDrawEvent(GraphitiHandle* handle, PinInfo_C* out_pins, int max_len) {
+        if (!handle || !out_pins || max_len <= 0)
+            return 0;
 
-    DrawEvent_C graphiti_getNextDrawEvent(GraphitiHandle* handle) {
-        DrawEvent_C result = {nullptr, 0, false};
-        auto event = handle->api.getNextDrawEvent();
-        
-        if (event) {
-            result.has_value = true;
-            result.length = event->pins.size();
-            result.pins = new PinInfo_C[result.length];
-            
-            for (int i = 0; i < result.length; i++) {
-                result.pins[i].rowID = event->pins[i].rowID;
-                result.pins[i].columnID = event->pins[i].columnID;
-                result.pins[i].height = event->pins[i].height;
-                result.pins[i].blinkRate = event->pins[i].blinkRate;
-            }
-        }
-        
-        return result;
-    }
+        auto event = handle->api.getNextDrawEvent();  // returns optional<DrawEvent>
+        if (!event)
+            return 0;
 
-    void graphiti_freeDrawEvent(DrawEvent_C* event) {
-        if (event->pins) {
-            delete[] event->pins;
-            event->pins = nullptr;
+        int count = std::min<int>(event->pins.size(), max_len);
+        for (int i = 0; i < count; ++i) {
+            out_pins[i].rowID      = event->pins[i].rowID;
+            out_pins[i].columnID   = event->pins[i].columnID;
+            out_pins[i].height     = event->pins[i].height;
+            out_pins[i].blinkRate  = event->pins[i].blinkRate;
         }
+
+        return count;
     }
 
     void graphiti_sendACK(GraphitiHandle* handle) {
@@ -169,6 +152,34 @@ extern "C" {
 
     void graphiti_getSoftwareVersion(GraphitiHandle* handle) {
         handle->api.getSoftwareVersion();
+    }
+
+    void graphiti_getHardwareVersion(GraphitiHandle* handle) {
+        handle->api.getHardwareVersion();
+    }
+
+    void graphiti_getSerialNumber(GraphitiHandle* handle) {
+        handle->api.getSerialNumber();
+    }
+
+    void graphiti_getBatteryStatus(GraphitiHandle* handle) {
+        handle->api.getBatteryStatus();
+    }
+
+    void graphiti_getResolutionInformation(GraphitiHandle* handle) {
+        handle->api.getResolutionInformation();
+    }
+
+    void graphiti_getDeviceOrientation(GraphitiHandle* handle) {
+        handle->api.getDeviceOrientation();
+    }
+
+    void graphiti_getHeightInformation(GraphitiHandle* handle) {
+        handle->api.getHeightInformation();
+    }
+
+    void graphiti_getDeviceName(GraphitiHandle* handle) {
+        handle->api.getDeviceName();
     }
 
     void graphiti_updateDisplay(GraphitiHandle* handle, const uint8_t* screen_data, int length) {

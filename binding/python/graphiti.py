@@ -1,7 +1,7 @@
 from ctypes import (
     CDLL, c_void_p, c_bool, c_int, c_char_p,
-    POINTER, Structure, c_uint8,
-    byref, util
+    POINTER, Structure, c_uint8, c_size_t,
+    byref, create_string_buffer, cast
 )
 from typing import Optional, List, Dict, Union
 import os
@@ -38,7 +38,7 @@ class DrawEvent_C(Structure):
 class Graphiti:
     def __init__(self):
         dll_dir = os.path.dirname(os.path.abspath(__file__))
-        print("dll_dir: " + dll_dir)
+        #print("dll_dir: " + dll_dir)
         os.add_dll_directory(dll_dir)
         dll_path = os.path.join(dll_dir, "libGraphiti_C.dll")
         try:
@@ -46,6 +46,7 @@ class Graphiti:
         except Exception as e:
             raise RuntimeError(f"Failed to load DLL: {e}")
         self._setup_types()
+        self._handle = None
         
     def _setup_types(self):
         # Handle Management
@@ -60,18 +61,18 @@ class Graphiti:
         # VCP calls
         self._lib.graphiti_startUpVCP.argtypes = [c_void_p, c_char_p, c_bool, c_bool]
         self._lib.graphiti_startUpVCP.restype = c_bool
-        self._lib.shutDownVCP.argtypes = [c_void_p, c_bool, c_bool]
-        self._lib.shutDownVCP.restype = None
+        self._lib.graphiti_shutDownVCP.argtypes = [c_void_p, c_bool, c_bool]
+        self._lib.graphiti_shutDownVCP.restype = None
 
         # Extension
         self._lib.graphiti_index.argtypes = [c_void_p, c_int, c_int]
         self._lib.graphiti_index.restype = c_int
-        self._lib.setPin.argtypes = [c_void_p, c_int, c_int, c_int]
-        self._lib.setPin.restype = None
+        self._lib.graphiti_setPin.argtypes = [c_void_p, c_int, c_int, c_int]
+        self._lib.graphiti_setPin.restype = None
         self._lib.graphiti_clearScreen.argtypes = [c_void_p]
         self._lib.graphiti_clearScreen.restype = None
         self._lib.graphiti_sleep.argtypes = [c_void_p, c_int]
-        self._lib.setPin.restype = None
+        self._lib.graphiti_setPin.restype = None
 
         # Response Thread
         self._lib.graphiti_startResponseThread.argtypes = [c_void_p]
@@ -80,14 +81,14 @@ class Graphiti:
         self._lib.graphiti_stopResponseThread.restype = None
 
         # Event handling
-        self._lib.graphiti_getNextOutputEvent.argtypes = [c_void_p]
-        self._lib.graphiti_getNextOutputEvent.restype = c_char_p
+        self._lib.graphiti_getNextOutputEvent.argtypes = [c_void_p, c_char_p, c_size_t]
+        self._lib.graphiti_getNextOutputEvent.restype = None
         self._lib.graphiti_getNextDisplayStatusEvent.argtypes = [c_void_p]
         self._lib.graphiti_getNextDisplayStatusEvent.restype = DisplayStatusEvent_C
         self._lib.graphiti_getNextKeyEvent.argtypes = [c_void_p]
         self._lib.graphiti_getNextKeyEvent.restype = KeyEvent_C
-        self._lib.graphiti_getNextGestureEvent.argtypes = [c_void_p]
-        self._lib.graphiti_getNextGestureEvent.restype = c_char_p
+        self._lib.graphiti_getNextGestureEvent.argtypes = [c_void_p, c_char_p, c_size_t]
+        self._lib.graphiti_getNextGestureEvent.restype = None
         self._lib.graphiti_getNextDrawEvent.argtypes = [c_void_p]
         self._lib.graphiti_getNextDrawEvent.restype = DrawEvent_C
 
@@ -109,8 +110,8 @@ class Graphiti:
 
         self._lib.graphiti_getSoftwareVersion.argtypes = [c_void_p]
         self._lib.graphiti_getSoftwareVersion.restype = None
-        self._lib.graphiti_getHardWareVersion.argtypes = [c_void_p]
-        self._lib.graphiti_getHardWareVersion.restype = None
+        self._lib.graphiti_getHardwareVersion.argtypes = [c_void_p]
+        self._lib.graphiti_getHardwareVersion.restype = None
         self._lib.graphiti_getSerialNumber.argtypes = [c_void_p]
         self._lib.graphiti_getSerialNumber.restype = None
         self._lib.graphiti_getBatteryStatus.argtypes = [c_void_p]
@@ -172,7 +173,7 @@ class Graphiti:
         self._lib.graphiti_setDateAndTime.restype = None
 
     def graphiti_create(self):
-        self._lib.graphiti_create()
+        self._handle = self._lib.graphiti_create()
 
     def graphiti_create_with_connection(self, connection: c_void_p):
         self._lib.graphiti_createWithConnection(connection)
@@ -224,57 +225,73 @@ class Graphiti:
 
     # Event handling
     def get_next_output_event(self) -> Optional[str]:
-        ptr = self._lib.graphiti_getNextOutputEvent(self._handle)
-        if not ptr:
+        buf = create_string_buffer(512) 
+
+        self._lib.graphiti_getNextOutputEvent(self._handle, buf, len(buf))
+
+        output = buf.value.decode('utf-8')
+
+        return output if output else None
+
+    def get_next_display_status_event(self) -> list[int] | None:
+        MAX_LEN = 2400
+        buffer = (c_int * MAX_LEN)()
+
+        # Set argtypes/restype (ideally only once)
+        self._lib.graphiti_getNextDisplayStatusEvent.argtypes = [c_void_p, POINTER(c_int),c_int]
+        self._lib.graphiti_getNextDisplayStatusEvent.restype = c_int
+
+        count = self._lib.graphiti_getNextDisplayStatusEvent(self._handle, buffer, MAX_LEN)
+
+        if count <= 0:
             return None
-        try:
-            return ptr.decode('utf-8')
-        finally:
-            self._lib.graphiti_freeString(ptr)
 
-    def get_next_display_status(self) -> Optional[Dict]:
-        event = self._lib.graphiti_getNextDisplayStatusEvent(self._handle)
-        try:
-            if not event.has_value:
-                return None
-            return {
-                'data': bytes(event.data[:event.length]),
-                'length': event.length
-            }
-        finally:
-            self._lib.graphiti_freeDisplayStatusEvent(byref(event))
+        return list(buffer[:count])
 
-    def get_next_key_event(self) -> Optional[List[str]]:
-        event = self._lib.graphiti_get_next_key_event(self._handle)
-        try:
-            if not event.has_value:
-                return None
-            return [event.keys[i].decode('utf-8') for i in range(event.count)]
-        finally:
-            self._lib.graphiti_freeKeyEvent(byref(event))
+    def get_next_key_event(self) -> list[str] | None:
+        MAX_KEYS = 14
+        MAX_STRING_LEN = 64
+
+        # Step 1: Allocate Python string buffers
+        string_buffers = [create_string_buffer(MAX_STRING_LEN) for _ in range(MAX_KEYS)]
+
+        # Step 2: Create char** (array of pointers to buffers)
+        key_array_type = c_char_p * MAX_KEYS
+        key_array = key_array_type(*(cast(buf, c_char_p) for buf in string_buffers))
+
+        # Set argtypes/restype
+        self._lib.graphiti_getNextKeyEvent.argtypes = [c_void_p, POINTER(c_char_p), c_int]
+        self._lib.graphiti_getNextKeyEvent.restype = c_int
+
+        count = self._lib.graphiti_getNextKeyEvent(self._handle, key_array, MAX_STRING_LEN)
+
+        if count <= 0:
+            return None
+
+        return [buf.value.decode("utf-8") for buf in string_buffers[:count]]
 
     def get_next_gesture_event(self) -> Optional[str]:
-        ptr = self._lib.graphiti_getNextGestureEvent(self._handle)
-        if not ptr:
-            return None
-        try:
-            return ptr.decode('utf-8')
-        finally:
-            self._lib.graphiti_freeString(ptr)
+        buf = create_string_buffer(512) 
 
-    def get_next_draw_event(self) -> Optional[List[Dict]]:
-        event = self._lib.graphiti_getNextDrawEvent(self._handle)
-        try:
-            if not event.has_value:
-                return None
-            return [{
-                'row': event.pins[i].rowID,
-                'column': event.pins[i].columnID,
-                'height': event.pins[i].height,
-                'blink_rate': event.pins[i].blinkRate
-            } for i in range(event.length)]
-        finally:
-            self._lib.graphiti_freeDrawEvent(byref(event))
+        self._lib.graphiti_getNextGestureEvent(self._handle, buf, len(buf))
+
+        output = buf.value.decode('utf-8')
+        
+        return output if output else None
+
+    def get_next_draw_event(self) -> list[PinInfo_C] | None:
+        MAX_PINS = 2400
+        pins = (PinInfo_C * MAX_PINS)()
+
+        self._lib.graphiti_getNextDrawEvent.argtypes = [c_void_p, POINTER(PinInfo_C), c_int]
+        self._lib.graphiti_getNextDrawEvent.restype = c_int
+
+        count = self._lib.graphiti_getNextDrawEvent(self._handle, pins, MAX_PINS)
+
+        if count <= 0:
+            return None
+
+        return list(pins[:count])
 
     # Device control
     def send_ack(self):
@@ -287,7 +304,7 @@ class Graphiti:
         self._lib.graphiti_getSoftwareVersion(self._handle)
 
     def get_hardware_version(self):
-        self._lib.graphiti_getHardWareVersion(self._handle)
+        self._lib.graphiti_getHardwareVersion(self._handle)
 
     def get_get_serial_number(self):
         self._lib.graphiti_getSerialNumber(self._handle)

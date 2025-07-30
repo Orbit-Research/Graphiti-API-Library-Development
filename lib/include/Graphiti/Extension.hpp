@@ -8,13 +8,23 @@
 
 #include <Graphiti/Connection/Connection_VCP.hpp>
 
+#ifdef _WIN32
+  #ifdef BUILDING_GRAPHITI_DLL
+    #define GRAPHITI_API __declspec(dllexport)
+  #else
+    #define GRAPHITI_API __declspec(dllimport)
+  #endif
+#else
+  #define GRAPHITI_API
+#endif
+
 /**
  * @brief Class to improve the ease of use of the Graphiti
  * Graphiti_API can be used with or without GraphitExtension
  * GraphitiExtension can also be used as a reference to how
  * the Graphiti_API can be used
  */
-class GraphitiExtension : public Graphiti_API {
+class GRAPHITI_API GraphitiExtension : public Graphiti_API {
 public:
     /**
      * @brief Construct a new Graphiti Extension object

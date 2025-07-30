@@ -51,7 +51,7 @@ build cmake_object_order_depends_target_Graphiti: phony || .
 
 build CMakeFiles/Graphiti.dir/src/API.cpp.obj: CXX_COMPILER__Graphiti_unscanned_Release C$:/Users/Daniel/Visual$ Studio$ Code$ Projects/Graphiti_API_Library_0_1/lib/src/API.cpp || cmake_object_order_depends_target_Graphiti
   CONFIG = Release
-  DEFINES = -DGraphiti_EXPORTS -D_WIN32_WINNT=0x0601
+  DEFINES = -DBUILDING_GRAPHITI_DLL -DGraphiti_EXPORTS -D_WIN32_WINNT=0x0601
   DEP_FILE = CMakeFiles\Graphiti.dir\src\API.cpp.obj.d
   FLAGS = -O3 -DNDEBUG -std=gnu++23
   INCLUDES = -I"C:/Users/Daniel/Visual Studio Code Projects/Graphiti_API_Library_0_1/lib/include" -isystem C:/Users/Daniel/vcpkg/installed/x64-windows/include
@@ -62,7 +62,7 @@ build CMakeFiles/Graphiti.dir/src/API.cpp.obj: CXX_COMPILER__Graphiti_unscanned_
 
 build CMakeFiles/Graphiti.dir/src/Extension.cpp.obj: CXX_COMPILER__Graphiti_unscanned_Release C$:/Users/Daniel/Visual$ Studio$ Code$ Projects/Graphiti_API_Library_0_1/lib/src/Extension.cpp || cmake_object_order_depends_target_Graphiti
   CONFIG = Release
-  DEFINES = -DGraphiti_EXPORTS -D_WIN32_WINNT=0x0601
+  DEFINES = -DBUILDING_GRAPHITI_DLL -DGraphiti_EXPORTS -D_WIN32_WINNT=0x0601
   DEP_FILE = CMakeFiles\Graphiti.dir\src\Extension.cpp.obj.d
   FLAGS = -O3 -DNDEBUG -std=gnu++23
   INCLUDES = -I"C:/Users/Daniel/Visual Studio Code Projects/Graphiti_API_Library_0_1/lib/include" -isystem C:/Users/Daniel/vcpkg/installed/x64-windows/include
@@ -73,7 +73,7 @@ build CMakeFiles/Graphiti.dir/src/Extension.cpp.obj: CXX_COMPILER__Graphiti_unsc
 
 build CMakeFiles/Graphiti.dir/src/Connection/Connection_VCP.cpp.obj: CXX_COMPILER__Graphiti_unscanned_Release C$:/Users/Daniel/Visual$ Studio$ Code$ Projects/Graphiti_API_Library_0_1/lib/src/Connection/Connection_VCP.cpp || cmake_object_order_depends_target_Graphiti
   CONFIG = Release
-  DEFINES = -DGraphiti_EXPORTS -D_WIN32_WINNT=0x0601
+  DEFINES = -DBUILDING_GRAPHITI_DLL -DGraphiti_EXPORTS -D_WIN32_WINNT=0x0601
   DEP_FILE = CMakeFiles\Graphiti.dir\src\Connection\Connection_VCP.cpp.obj.d
   FLAGS = -O3 -DNDEBUG -std=gnu++23
   INCLUDES = -I"C:/Users/Daniel/Visual Studio Code Projects/Graphiti_API_Library_0_1/lib/include" -isystem C:/Users/Daniel/vcpkg/installed/x64-windows/include
