@@ -193,7 +193,7 @@ Library containing API calls of the Graphiti by Orbit Research. Copyright © 202
 - GraphitiTesting.code-workspace
     - Visual Studio Code workspace configuration
 
-- install_library_&_vcpkg.ps1
+- install_library_vcpkg.ps1
     - Installs the vcpkg by running vcpkg_Install_User.ps1
     - Builds and installs the library by running library.ps1 from the lib folder
 
