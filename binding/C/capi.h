@@ -40,29 +40,13 @@ GRAPHITI_API void graphiti_sleep(GraphitiHandle* handle, int time);
 GRAPHITI_API void graphiti_startResponseThread(GraphitiHandle* handle);
 GRAPHITI_API void graphiti_stopResponseThread(GraphitiHandle* handle);
 
-GRAPHITI_API char* graphiti_getNextOutputEvent(GraphitiHandle* handle);
-GRAPHITI_API void graphiti_freeString(char* str);
+GRAPHITI_API void graphiti_getNextOutputEvent(GraphitiHandle* handle, char* out, size_t max_len);
 
-typedef struct {
-    uint8_t* data;    // Pointer to event data
-    int length;       // Length of data
-    bool has_value;   // Whether optional has value
-} DisplayStatusEvent_C;
+GRAPHITI_API int graphiti_getNextDisplayStatusEvent(GraphitiHandle* handle, int* buffer, int max_len);
 
-GRAPHITI_API DisplayStatusEvent_C graphiti_getNextDisplayStatusEvent(GraphitiHandle* handle);
-GRAPHITI_API void graphiti_freeDisplayStatusEvent(DisplayStatusEvent_C* event);
+GRAPHITI_API int graphiti_getNextKeyEvent(GraphitiHandle* handle, char** buffer, int max_len);
 
-// ---- Key Event ----
-typedef struct {
-    char** keys;      // Array of key strings
-    int count;        // Number of keys
-    bool has_value;   // Whether optional has value
-} KeyEvent_C;
-
-GRAPHITI_API KeyEvent_C graphiti_getNextKeyEvent(GraphitiHandle* handle);
-GRAPHITI_API void graphiti_freeKeyEvent(KeyEvent_C* event);
-
-GRAPHITI_API char* graphiti_getNextGestureEvent(GraphitiHandle* handle);
+GRAPHITI_API void graphiti_getNextGestureEvent(GraphitiHandle* handle, char* out, size_t max_len);
 
 // ---- Draw Event ----
 typedef struct {
@@ -72,21 +56,14 @@ typedef struct {
     int blinkRate;
 } PinInfo_C;
 
-typedef struct {
-    PinInfo_C* pins;  // Array of pins
-    int length;       // Number of pins
-    bool has_value;   // Whether optional has value
-} DrawEvent_C;
-
-GRAPHITI_API DrawEvent_C graphiti_getNextDrawEvent(GraphitiHandle* handle);
-GRAPHITI_API void graphiti_freeDrawEvent(DrawEvent_C* event);
+GRAPHITI_API int graphiti_getNextDrawEvent(GraphitiHandle* handle, PinInfo_C* out_pins, int max_len);
 
 //ACK & NACK
 GRAPHITI_API void graphiti_sendACK(GraphitiHandle* handle);
 GRAPHITI_API void graphiti_sendNACK(GraphitiHandle* handle);
 
 GRAPHITI_API void graphiti_getSoftwareVersion(GraphitiHandle* handle);
-GRAPHITI_API void graphiti_getHardWareVersion(GraphitiHandle* handle);
+GRAPHITI_API void graphiti_getHardwareVersion(GraphitiHandle* handle);
 GRAPHITI_API void graphiti_getSerialNumber(GraphitiHandle* handle);
 GRAPHITI_API void graphiti_getBatteryStatus(GraphitiHandle* handle);
 GRAPHITI_API void graphiti_getResolutionInformation(GraphitiHandle* handle);

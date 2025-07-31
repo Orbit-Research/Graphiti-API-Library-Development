@@ -92,16 +92,6 @@ class Graphiti:
         self._lib.graphiti_getNextDrawEvent.argtypes = [c_void_p]
         self._lib.graphiti_getNextDrawEvent.restype = DrawEvent_C
 
-        # Freeing for events
-        self._lib.graphiti_freeString.argtypes = [c_char_p]
-        self._lib.graphiti_freeString.restype = None
-        self._lib.graphiti_freeDisplayStatusEvent.argtypes = [POINTER(DisplayStatusEvent_C)]
-        self._lib.graphiti_freeDisplayStatusEvent.restype = None
-        self._lib.graphiti_freeKeyEvent.argtypes = [POINTER(KeyEvent_C)]
-        self._lib.graphiti_freeKeyEvent.restype = None
-        self._lib.graphiti_freeDrawEvent.argtypes = [POINTER(DrawEvent_C)]
-        self._lib.graphiti_freeDrawEvent.restype = None
-
         # API calls
         self._lib.graphiti_sendACK.argtypes = [c_void_p]
         self._lib.graphiti_sendACK.restype = None

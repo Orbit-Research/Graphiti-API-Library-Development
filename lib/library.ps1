@@ -19,10 +19,10 @@ if ($Compiler) {
 
 cmake @cmakeArgs
 
-cmake --build build
+cmake --build build --config Release
 
 # Install build at user graphiti folder
-cmake --install build --prefix "$env:USERPROFILE\graphiti"
+cmake --install build --config Release --prefix "$env:USERPROFILE\graphiti"
 
 #Add graphiti to PATH
 $graphitiPath = "$env:USERPROFILE\graphiti"

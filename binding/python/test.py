@@ -15,9 +15,7 @@ time.sleep(2)
 
 strOpt = handle.get_next_output_event()
 if strOpt is not None:
-    print("Not None\n")
     print(strOpt)
-    print("\n?")
 
 time.sleep(2)
 

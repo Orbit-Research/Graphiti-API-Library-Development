@@ -18,7 +18,8 @@ int main() {
 
     Sleep(2000);
 
-    char* software_version = graphiti_getNextOutputEvent(graphiti);
+    char* software_version;
+    graphiti_getNextOutputEvent(graphiti, software_version, 100);
 
     printf(software_version);
 

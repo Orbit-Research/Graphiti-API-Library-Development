@@ -11,7 +11,9 @@ Library containing API calls of the Graphiti by Orbit Research. Copyright © 202
 ## Requirements
 
 - C/C++ compiler (e.g., GCC, MSVC)
-- CMake (optional, for building the examples)
+- CMake (for building the library on your machine)
+- Python (for the python wrapper and use of it)
+- Execution Policy must be RemoteSigned for the current user to run the ps1 script files (this can be changed by running Set-ExecutionPolicy.exe)
 
 ## Folder Structure
 
@@ -23,10 +25,19 @@ Library containing API calls of the Graphiti by Orbit Research. Copyright © 202
 
     - The C folder includes main.c as the library should be compiled so that it has the C wrapper that allows use of C for the 
         library
+        - capi.h 
+            - This is the header file for the C API of the library
+            - Need to write a script to copy the current capi.h to this directory
+        - This library was fully functional but needs to be tested due to the new changes for supporting the python library
 
     - A java binding has currently not been written (7/25/2025)
 
-    - Python currently has a wrapper called graphiti.py but it is not working (7/25/2025)
+    - python
+        - Python is mostly functional with calls correctly
+        - capi.h 
+            - This is the header file for the C API of the library
+            - Need to write a script to copy the current capi.h to this directory
+        - 
 
 - build
     - contains the build of the library with any run file it was run most recently which is typically the tests from the 
@@ -152,6 +163,28 @@ Library containing API calls of the Graphiti by Orbit Research. Copyright © 202
     - main.cpp
         - Run of the library without the extension
 
+- scripts
+    - Folder containing all the scripts used for the root directory of the project
+
+    - install_library_vcpkg.ps1
+        - Installs the vcpkg by running vcpkg_Install_User.ps1
+        - Builds and installs the library by running library.ps1 from the lib folder
+    
+    - Set-ExecutionPolicy.exe
+        - Sets the execution polict to RemoteSigned so ps1 files can be run in powershell
+
+    - Set-ExcutionPolicy.ps1
+        - File used to create Set-ExecutionPolicy.exe
+        - This file is included for transparency as to the contents of Set-ExecutionPolicy.exe
+
+    - tools.ps1
+        - File containing commands that can be used to run the code or build the library in different ways
+        - Debug includes any code with the Debug flag
+        - No Extension excludes the Extension.cpp file
+
+    - vcpkg_Install_User.ps1
+        - Installs vcpkg under the current user and adds vcpkg to the PATH variables
+
 - TestFolder
     - Folder containing tests and the test harness
 
@@ -178,8 +211,10 @@ Library containing API calls of the Graphiti by Orbit Research. Copyright © 202
         - Implementation of the tests
 
 - .gitignore
-    - Git ignore to ignore files to that have changes like my history folder which is from an extension that saves recent changes 
-        to keep a history
+    - Git ignore to ignore files to that have changes like my history folder 
+    which is from an extension that saves recent changes to keep a history
+
+    - Also includes my_install.ps1 which is a ps1 file that is a copy of install_library_vcpkg script with -Generator "Ninja" -Compiler "g++" in the library.ps1 line to run with Ninja and g++ as they are my prefered generator and compiler
 
 - CMakeLists.txt
     - CMakeLists.txt of running the test harness with the library Code just as in the CMakeListsFiles folder but is most up to date
@@ -187,29 +222,8 @@ Library containing API calls of the Graphiti by Orbit Research. Copyright © 202
 - CMakePresets.json
     - Presets for using Ninja and vscode
 
-- commandsLibrary.txt
-    - File containg some commands for vcpkg and those for building the library
-
 - GraphitiTesting.code-workspace
     - Visual Studio Code workspace configuration
 
-- install_library_vcpkg.ps1
-    - Installs the vcpkg by running vcpkg_Install_User.ps1
-    - Builds and installs the library by running library.ps1 from the lib folder
-
 - LICENSE
     - File containing the GNU GENERAL PUBLIC LICENSE that this code was made under
-    
-- tools.ps1
-    - File containing commands that can be used to run the code or build the library in different ways
-    - Debug includes any code with the Debug flag
-    - No Extension excludes the Extension.cpp file
-
-- vcpkg_Install_User.ps1
-    - Installs vcpkg under the current user and adds vcpkg to the PATH variables
-
-- vcpkg.ps1
-    - File containg vcpkg commands for setting up vcpkg
-    - Requires git to be installed and accessible
-    - To be run in the directory you wish to install vcpkg
-    - vckpg has to be added to your path variables by hand
