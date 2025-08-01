@@ -3,6 +3,15 @@
 # Clean previous builds
 Remove-Item -Force -Recurse -ErrorAction SilentlyContinue build, *.dll, *.so, *.class
 
+# Copy dll
+.\copy-dll-C.ps1
+
+# Remove JNI headers
+Remove-Item -Force -Recurse -ErrorAction SilentlyContinue .\Graphiti.class, '.\Graphiti$DrawEvent.class', '.\Graphiti$PinInfo.class', .\binding_java_Graphiti.h
+
+# Compile JNI headers
+javac Graphiti.java
+
 # Generate JNI headers
 javac -h . Graphiti.java
 

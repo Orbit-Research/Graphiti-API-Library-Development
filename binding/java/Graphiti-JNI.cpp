@@ -2,9 +2,9 @@
 #include <string>
 #include <vector>
 #include "binding_java_Graphiti.h"           // auto-generated JNI header
-#include "graphiti_handle.hpp"
+#include "internal_handle.hpp"
 
-#pragma comment(lib, "lib_Graphiti.lib")
+#pragma comment(lib, "libGraphiti_C.lib")
 
 std::string jstringToString(JNIEnv* env, jstring jstr) {
     if (!jstr) return "";
@@ -16,34 +16,38 @@ std::string jstringToString(JNIEnv* env, jstring jstr) {
 
 extern "C" {
 
-JNIEXPORT jlong JNICALL Java_binding_java_Graphiti_graphiti_1create(JNIEnv*, jobject obj) {
-    return reinterpret_cast<jlong>(graphiti_create());
-}
+// Extension methods
 
-JNIEXPORT jlong JNICALL Java_binding_java_Graphiti_graphiti_createWithConnection(JNIEnv* env, jobject obj, jlong connection) {
-    return reinterpret_cast<jlong>(new GraphitiHandle(reinterpret_cast<GraphitiConnection*>(connection)));
-}
-
-JNIEXPORT void JNICALL Java_binding_java_Graphiti_graphiti_1destroy(JNIEnv*, jobject obj, jlong handle) {
-    delete reinterpret_cast<GraphitiHandle*>(handle);
-}
-
-JNIEXPORT void JNICALL Java_com_example_graphiti_GraphitiNative_graphitiSetConnection(JNIEnv* env, jobject obj, jlong handle, jlong connection) {
-    reinterpret_cast<GraphitiHandle*>(handle)->api.setConnection(reinterpret_cast<GraphitiConnection*>(connection));
-}
-
-JNIEXPORT jboolean JNICALL Java_com_example_graphiti_GraphitiNative_graphitiStartUpVCP(JNIEnv* env, jobject obj, jlong handle, 
+JNIEXPORT jboolean JNICALL Java_binding_java_Graphiti_startUpVCP(JNIEnv* env, jobject obj, jlong handle, 
     jstring portName, jboolean keyEventsBool, jboolean touchEventsBool
 ) {
     std::string port = jstringToString(env, portName);
     return reinterpret_cast<GraphitiHandle*>(handle)->api.startUpVCP(port, keyEventsBool, touchEventsBool);
 }
 
-JNIEXPORT void JNICALL Java_com_example_graphiti_GraphitiNative_graphitiShutDownVCP(JNIEnv* env, jobject obj, jlong handle, 
+JNIEXPORT void JNICALL Java_binding_java_Graphiti_shutDownVCP(JNIEnv* env, jobject obj, jlong handle, 
     jboolean keyEventsBool, jboolean touchEventsBool
 ) {
     reinterpret_cast<GraphitiHandle*>(handle)->api.shutDownVCP(keyEventsBool, touchEventsBool);
 }
+
+JNIEXPORT jint JNICALL Java_binding_java_Graphiti_index(JNIEnv* env, jobject obj, jlong handle, jint row, jint col) {
+    return reinterpret_cast<GraphitiHandle*>(handle)->api.index(row, col);
+}
+
+JNIEXPORT void JNICALL Java_binding_java_Graphiti_setPin(JNIEnv* env, jobject obj, jlong handle, jint row, jint col, jint height) {
+    reinterpret_cast<GraphitiHandle*>(handle)->api.setPin(row, col, height);
+}
+
+JNIEXPORT void JNICALL Java_binding_java_Graphiti_clearScreen(JNIEnv* env, jobject obj, jlong handle) {
+    reinterpret_cast<GraphitiHandle*>(handle)->api.clearScreen();
+}
+
+JNIEXPORT void JNICALL Java_binding_java_Graphiti_sleep(JNIEnv* env, jobject obj, jlong handle, jint time) {
+    reinterpret_cast<GraphitiHandle*>(handle)->api.sleep(time);
+}
+
+//Event handlers
 
 JNIEXPORT jstring JNICALL Java_binding_java_Graphiti_getNextOutputEvent(JNIEnv* env, jobject obj, jlong handle) {
     auto event = reinterpret_cast<GraphitiHandle*>(handle)->api.getNextOutputEvent();
@@ -153,27 +157,11 @@ JNIEXPORT jobject JNICALL Java_com_example_graphiti_Graphiti_getNextDrawEvent(
     return jDrawEvent;
 }
 
-JNIEXPORT jint JNICALL Java_binding_java_Graphiti_index(JNIEnv* env, jobject obj, jlong handle, jint row, jint col) {
-    return reinterpret_cast<GraphitiHandle*>(handle)->api.index(row, col);
-}
-
-JNIEXPORT void JNICALL Java_binding_java_Graphiti_setPin(JNIEnv* env, jobject obj, jlong handle, jint row, jint col, jint height) {
-    reinterpret_cast<GraphitiHandle*>(handle)->api.setPin(row, col, height);
-}
-
-JNIEXPORT void JNICALL Java_binding_java_Graphiti_clearScreen(JNIEnv* env, jobject obj, jlong handle) {
-    reinterpret_cast<GraphitiHandle*>(handle)->api.clearScreen();
-}
-
-JNIEXPORT void JNICALL Java_binding_java_Graphiti_sleep(JNIEnv* env, jobject obj, jlong handle, jint time) {
-    reinterpret_cast<GraphitiHandle*>(handle)->api.sleep(time);
-}
-
-JNIEXPORT void JNICALL Java_com_example_graphiti_GraphitiNative_graphitiStartResponseThread(JNIEnv* env, jobject obj, jlong handle) {
+JNIEXPORT void JNICALL Java_binding_java_Graphiti_startResponseThread(JNIEnv* env, jobject obj, jlong handle) {
     reinterpret_cast<GraphitiHandle*>(handle)->api.startResponseThread();
 }
 
-JNIEXPORT void JNICALL Java_com_example_graphiti_GraphitiNative_graphitiStopResponseThread(JNIEnv* env, jobject obj, jlong handle) {
+JNIEXPORT void JNICALL Java_binding_java_Graphiti_sendNACK_stopResponseThread(JNIEnv* env, jobject obj, jlong handle) {
     reinterpret_cast<GraphitiHandle*>(handle)->api.stopResponseThread();
 }
 

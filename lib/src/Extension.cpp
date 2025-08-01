@@ -36,9 +36,6 @@ bool GraphitiExtension::startUpVCP(std::string port, bool keyEventsBool, bool to
         sleep(2);
     }
 
-    clearDisplay();
-    sleep(5);
-
     if(keyEventsBool) {
         #ifdef DEBUG
             std::cout << "Enabling Key event" << std::endl;

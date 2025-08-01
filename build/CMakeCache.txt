@@ -251,6 +251,9 @@ Graphiti_API_Library_0_1_IS_TOP_LEVEL:STATIC=ON
 //Value Computed by CMake
 Graphiti_API_Library_0_1_SOURCE_DIR:STATIC=C:/Users/Daniel/Visual Studio Code Projects/Graphiti_API_Library_0_1
 
+//No help, variable specified on the command line.
+Java_HOME:UNINITIALIZED=C:\Program Files\Java\jdk-20
+
 //Include Extension.cpp in build
 USE_EXTENSION:BOOL=ON
 

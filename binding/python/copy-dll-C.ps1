@@ -1,5 +1,5 @@
 # Delete current libGraphiti_C.dll
-Write-Error "Deleting libGraphiti_C.dll"
+Write-Host "Deleting libGraphiti_C.dll"
 Remove-Item libGraphiti_C.dll -ErrorAction SilentlyContinue
 
 # Define source and destination paths
