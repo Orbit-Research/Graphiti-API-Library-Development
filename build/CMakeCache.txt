@@ -22,7 +22,10 @@ CMAKE_AR:FILEPATH=C:/msys64/mingw64/bin/ar.exe
 
 //Choose the type of build, options are: None Debug Release RelWithDebInfo
 // MinSizeRel ...
-CMAKE_BUILD_TYPE:STRING=Debug
+CMAKE_BUILD_TYPE:STRING=Release
+
+//CXX compiler
+CMAKE_CXX_COMPILER:STRING=C:/msys64/mingw64/bin/g++.exe
 
 //A wrapper around 'ar' adding the appropriate '--plugin' option
 // for the GCC compiler
@@ -233,8 +236,8 @@ CMAKE_STRIP:FILEPATH=C:/msys64/mingw64/bin/strip.exe
 //Path to a program.
 CMAKE_TAPI:FILEPATH=CMAKE_TAPI-NOTFOUND
 
-//No help, variable specified on the command line.
-CMAKE_TOOLCHAIN_FILE:UNINITIALIZED=C:/vcpkg/scripts/buildsystems/vcpkg.cmake
+//The CMake toolchain file
+CMAKE_TOOLCHAIN_FILE:FILEPATH=C:/Users/Daniel/vcpkg/scripts/buildsystems/vcpkg.cmake
 
 //If this value is on, makefiles will be generated without the
 // .SILENT directive, and all commands will be echoed to the console
@@ -250,12 +253,6 @@ Graphiti_API_Library_0_1_IS_TOP_LEVEL:STATIC=ON
 
 //Value Computed by CMake
 Graphiti_API_Library_0_1_SOURCE_DIR:STATIC=C:/Users/Daniel/Visual Studio Code Projects/Graphiti_API_Library_0_1
-
-//No help, variable specified on the command line.
-Java_HOME:UNINITIALIZED=C:\Program Files\Java\jdk-20
-
-//Include Extension.cpp in build
-USE_EXTENSION:BOOL=ON
 
 //Automatically copy dependencies into the output directory for
 // executables.
@@ -312,6 +309,9 @@ _VCPKG_INSTALLED_DIR:PATH=C:/Users/Daniel/vcpkg/installed
 //The directory containing a CMake configuration file for asio.
 asio_DIR:PATH=C:/Users/Daniel/vcpkg/installed/x64-windows/share/asio
 
+//The directory containing a CMake configuration file for hidapi.
+hidapi_DIR:PATH=C:/Users/Daniel/vcpkg/installed/x64-windows/share/hidapi
+
 
 ########################
 # INTERNAL cache entries
@@ -335,6 +335,8 @@ CMAKE_COMMAND:INTERNAL=C:/Program Files/CMake/bin/cmake.exe
 CMAKE_CPACK_COMMAND:INTERNAL=C:/Program Files/CMake/bin/cpack.exe
 //Path to ctest program executable.
 CMAKE_CTEST_COMMAND:INTERNAL=C:/Program Files/CMake/bin/ctest.exe
+//ADVANCED property for variable: CMAKE_CXX_COMPILER
+CMAKE_CXX_COMPILER-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_CXX_COMPILER_AR
 CMAKE_CXX_COMPILER_AR-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_CXX_COMPILER_RANLIB

@@ -18,7 +18,7 @@ int main()
      * alltestsfile is a constant containing the all tests file name
      * So are failedfile, passedfile and imageTests
      */
-    testHarness->runTestsFromFile(alltestsfile);
+    //testHarness->runTestsFromFile(alltestsfile);
 
     //Rerun failed
     //testHarness->runTestsFromFile(failedfile);
@@ -27,7 +27,7 @@ int main()
     //testHarness->runTestsFromFile(passedfile);
 
     //Single test
-    //testHarness->runTest("update_Single_Row_Functionality");
+    testHarness->runTest("clear_Display_Functionality");
 
     //testHarness->runTestsFromFile(imageTests);
 

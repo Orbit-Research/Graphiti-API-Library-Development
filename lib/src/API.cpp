@@ -75,22 +75,43 @@ void Graphiti_API::getResponse() {
     auto res = conn_->read(1);
     if (res.empty()) {
         //No response
-        std::cerr << "Response Empty" << std::endl;
+        #ifdef DEBUG
+        //std::cerr << "Response Empty" << std::endl;
+        #endif
         return;
     }
     debugByte(res[0]);
+
+    #ifdef DEBUG
+    std::cerr << "Response Non-Empty" << std::endl;
+    #endif
+
+    //HID report ID handling
+    if(res[0] == 0x07 || res[0] == 0x08) {
+        res = conn_->read(1);
+        #ifdef DEBUG
+        std::cerr << "Report ID found" << std::endl;
+        #endif
+    }
     
+    //Checking for start of frame marker
     if (res[0] != 0x1B) {
+        #ifdef DEBUG
         std::cerr << "Missing start-of-frame marker" << std::endl;
+        #endif
         return;
     }
+    debugByte(res[0]);
+
+    //Reading command id byte
     auto cmd = conn_->read(1);
     if (cmd.empty()) {
         std::cerr << "command id byte not recieved" << std::endl;
         return;
     }
     debugByte(cmd[0]);
-    // Map command with response map
+
+    // Map command id with response map
     auto it = responseSelectFunc.find(cmd[0]);
     if (it != responseSelectFunc.end()) {
         it->second();

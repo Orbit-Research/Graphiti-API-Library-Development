@@ -52,13 +52,19 @@ void Tests::registerTests(){
 bool Tests::startTesting(bool keyEvents, bool touchEvents, 
     std::function<bool()> func){
     graphiti = new GraphitiExtension();
-    if(!graphiti->startUpVCP("COM4", keyEvents, touchEvents)){
+    // if(!graphiti->startUpVCP("COM4", keyEvents, touchEvents)){
+    //     return false;
+    // }
+
+    if(!graphiti->startUpHID(0x1FC9, 0x8217, keyEvents, touchEvents)){
         return false;
     }
+    graphiti->sleep(1);
 
     bool result = func();
     
-    graphiti->shutDownVCP(keyEvents, touchEvents);
+    // graphiti->shutDownVCP(keyEvents, touchEvents);
+    graphiti->shutDownHID(keyEvents, touchEvents);
     delete graphiti;
     return result;
 }

@@ -29,6 +29,10 @@ GRAPHITI_API bool graphiti_startUpVCP(GraphitiHandle* handle, const char* portNa
 
 GRAPHITI_API void graphiti_shutDownVCP(GraphitiHandle* handle, bool keyEventsBool, bool touchEventsBool);
 
+GRAPHITI_API bool graphiti_startUpHID(GraphitiHandle* handle, uint16_t vendor_id, uint16_t product_id, bool keyEventsBool, bool touchEventsBool);
+
+GRAPHITI_API void graphiti_shutDownHID(GraphitiHandle* handle, bool keyEventsBool, bool touchEventsBool);
+
 GRAPHITI_API int graphiti_index(GraphitiHandle* handle, int row, int col);
 
 GRAPHITI_API void graphiti_setPin(GraphitiHandle* handle, int row, int col, int height);

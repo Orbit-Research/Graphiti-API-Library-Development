@@ -1,8 +1,7 @@
-#ifndef GRAPHITI_CONNECTION_VCP_H
-#define GRAPHITI_CONNECTION_VCP_H
+#ifndef GRAPHITI_CONNECTION_VCP_HPP
+#define GRAPHITI_CONNECTION_VCP_HPP
 
 #include <string>
-#include <vector>
 #define ASIO_STANDALONE
 #include <asio.hpp>
 using namespace asio;

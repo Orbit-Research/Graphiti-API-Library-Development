@@ -2,25 +2,22 @@ cmake_minimum_required(VERSION 3.15)
 set(CMAKE_CXX_STANDARD 23)
 
 # Set vcpkg toolchain (adjust path as needed)
-set(CMAKE_TOOLCHAIN_FILE "C:/Users/Daniel/vcpkg/scripts/buildsystems/vcpkg.cmake")
+set(CMAKE_TOOLCHAIN_FILE "$ENV{USERPROFILE}/vcpkg/scripts/buildsystems/vcpkg.cmake")
 set(CMAKE_CXX_COMPILER "g++")
 add_definitions(-D_WIN32_WINNT=0x0601)
 
 project(Graphiti_API_Library_0_1)
 
+find_package(asio CONFIG REQUIRED)
+find_package(hidapi CONFIG REQUIRED)
+
 # Set library sources
 set(GRAPHITI_SOURCES
     lib/src/API.cpp
-    lib/src/API_VCP.cpp
+    lib/src/Extension.cpp
     lib/src/Connection/Connection_VCP.cpp
+    lib/src/Connection/Connection_HID.cpp
 )
-
-# Optional Extension
-option(USE_EXTENSION "Include Extension.cpp in build" ON)
-if(USE_EXTENSION)
-    list(APPEND GRAPHITI_SOURCES lib/src/Extension.cpp)
-    add_compile_definitions(USE_EXTENSION)
-endif()
 
 # Create the library SHARED
 add_library(Graphiti SHARED ${GRAPHITI_SOURCES})
@@ -34,10 +31,12 @@ target_include_directories(Graphiti PUBLIC
 )
 
 # Find and link dependencies
-find_package(asio CONFIG REQUIRED)
 target_link_libraries(Graphiti PUBLIC 
     asio::asio
     ws2_32
+    hidapi::hidapi
+    hidapi::winapi
+    hidapi::include
 )
 
 # Add Debug Mode

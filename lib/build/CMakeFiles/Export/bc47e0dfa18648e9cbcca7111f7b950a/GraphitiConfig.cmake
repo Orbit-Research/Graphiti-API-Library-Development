@@ -60,7 +60,7 @@ add_library(Graphiti::Graphiti SHARED IMPORTED)
 
 set_target_properties(Graphiti::Graphiti PROPERTIES
   INTERFACE_INCLUDE_DIRECTORIES "${_IMPORT_PREFIX}/include;${_IMPORT_PREFIX}/include"
-  INTERFACE_LINK_LIBRARIES "asio::asio;ws2_32"
+  INTERFACE_LINK_LIBRARIES "asio::asio;ws2_32;hidapi::hidapi;hidapi::winapi;hidapi::include"
 )
 
 # Create imported target Graphiti::Graphiti_C

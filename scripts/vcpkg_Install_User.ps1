@@ -8,13 +8,16 @@ if (-not (Test-Path "$UserPath\vcpkg.exe")) {
     Write-Host "vcpkg already exists, skipping clone/bootstrap."
 }
 
-# Step 3: Integrate with MSBuild
+# Integrate with MSBuild
 & "$UserPath\vcpkg.exe" integrate install
 
-# Step 4: Install ASIO
+# Install Asio
 & "$UserPath\vcpkg.exe" install asio
 
-# Step 5: Add vcpkg to the user's PATH
+# Install Hidapi
+& "$UserPath\vcpkg.exe" install hidapi
+
+# Add vcpkg to the user's PATH
 $envPath = [Environment]::GetEnvironmentVariable("PATH", "User")
 if (-not $envPath.Contains($UserPath)) {
     [Environment]::SetEnvironmentVariable("PATH", "$envPath;$UserPath", "User")

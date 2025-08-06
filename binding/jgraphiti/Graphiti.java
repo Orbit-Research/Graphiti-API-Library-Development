@@ -27,8 +27,13 @@ public class Graphiti {
 
     public native long graphiti_create();
     public native void graphiti_destroy(long handle);
+
     public native boolean startUpVCP(long handle, String port, boolean key, boolean touch);
     public native void shutDownVCP(long handle, boolean key, boolean touch);
+
+    public native boolean startUpHID(long handle, int vendor_id, int product_id, boolean key, boolean touch);
+    public native void shutDownHID(long handle, boolean key, boolean touch);
+
     public native int index(long handle, int row, int col);
     public native void setPin(long handle, int row, int col, int height);
     public native void clearScreen(long handle);
