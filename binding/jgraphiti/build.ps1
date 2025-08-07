@@ -1,7 +1,10 @@
 # build.ps1 - CMake-based build
 
 # Clean previous builds
-Remove-Item -Force -Recurse -ErrorAction SilentlyContinue build, *.dll, *.so, *.class
+# Don't delte hidapi.dll
+Get-ChildItem -Path . -Filter *.dll -Recurse |
+Where-Object { $_.Name -ne 'hidapi.dll' } |
+Remove-Item -Force -ErrorAction SilentlyContinue
 
 # Copy dll
 .\copy-dll.ps1

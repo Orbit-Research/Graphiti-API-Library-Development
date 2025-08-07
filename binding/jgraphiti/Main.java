@@ -6,7 +6,8 @@ public class Main {
 
         long handle = graphiti.getHandle();
         
-        graphiti.startUpVCP(handle, "COM4", false, false);
+        //graphiti.startUpVCP(handle, "COM4", false, false);
+        graphiti.startUpHID(handle,0x1FC9, 0x8217, false, false);
 
         graphiti.sleep(handle, 2);
 
@@ -18,7 +19,8 @@ public class Main {
 
         graphiti.sleep(handle, 2);
 
-        graphiti.shutDownVCP(handle, false, false);
+        //graphiti.shutDownVCP(handle, false, false);
+        graphiti.shutDownHID(handle, false, false);
 
         graphiti.close();
     }

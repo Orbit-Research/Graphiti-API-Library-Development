@@ -10,12 +10,14 @@ project(Graphiti VERSION 1.0.0 LANGUAGES CXX C)  # Add C support
 include(GNUInstallDirs)
 
 find_package(asio REQUIRED)
+find_package(hidapi CONFIG REQUIRED)
 
 # --- Original C++ Library ---
 add_library(Graphiti SHARED 
     src/API.cpp 
     src/Extension.cpp
     src/Connection/Connection_VCP.cpp
+    src/Connection/Connection_HID.cpp
 )
 
 target_compile_definitions(Graphiti PRIVATE BUILDING_GRAPHITI_DLL)
@@ -28,6 +30,9 @@ target_include_directories(Graphiti PUBLIC
 target_link_libraries(Graphiti PUBLIC 
     asio::asio
     ws2_32
+    hidapi::hidapi
+    hidapi::winapi
+    hidapi::include
 )
 
 # --- C-Compatible Wrapper Library ---

@@ -39,6 +39,18 @@ JNIEXPORT void JNICALL Java_binding_jgraphiti_Graphiti_shutDownVCP(JNIEnv* env, 
     reinterpret_cast<GraphitiHandle*>(handle)->api.shutDownVCP(keyEventsBool, touchEventsBool);
 }
 
+JNIEXPORT jboolean JNICALL Java_binding_jgraphiti_Graphiti_startUpHID(JNIEnv* env, jobject obj, jlong handle, 
+    jint vendor_id, jint product_id, jboolean keyEventsBool, jboolean touchEventsBool
+) {
+    return reinterpret_cast<GraphitiHandle*>(handle)->api.startUpHID(vendor_id, product_id, keyEventsBool, touchEventsBool);
+}
+
+JNIEXPORT void JNICALL Java_binding_jgraphiti_Graphiti_shutDownHID(JNIEnv* env, jobject obj, jlong handle, 
+    jboolean keyEventsBool, jboolean touchEventsBool
+) {
+    reinterpret_cast<GraphitiHandle*>(handle)->api.shutDownHID(keyEventsBool, touchEventsBool);
+}
+
 JNIEXPORT jint JNICALL Java_binding_jgraphiti_Graphiti_index(JNIEnv* env, jobject obj, jlong handle, jint row, jint col) {
     return reinterpret_cast<GraphitiHandle*>(handle)->api.index(row, col);
 }

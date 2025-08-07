@@ -42,6 +42,18 @@ extern "C" {
         handle->api.shutDownVCP(keyEventsBool, touchEventsBool);
     }
 
+    bool graphiti_startUpHID(GraphitiHandle* handle, uint16_t vendor_id, uint16_t product_id, 
+        bool keyEventsBool, bool touchEventsBool
+    ){
+        return handle->api.startUpHID(vendor_id, product_id, keyEventsBool, touchEventsBool);
+    }
+
+    void graphiti_shutDownHID(GraphitiHandle* handle, 
+        bool keyEventsBool, bool touchEventsBool
+    ){
+        handle->api.shutDownHID(keyEventsBool, touchEventsBool);
+    }
+
     int graphiti_index(GraphitiHandle* handle, int row, int col) {
         return handle->api.index(row, col);
     }

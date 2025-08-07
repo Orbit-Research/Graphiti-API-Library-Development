@@ -23,6 +23,26 @@ bool GraphitiExtension::startUpVCP(std::string port, bool keyEventsBool, bool to
 
     setConnection(vcpConn);
     
+    startUpSequence(keyEventsBool, touchEventsBool);
+
+    return true;
+}
+
+bool GraphitiExtension::startUpHID(uint16_t vendor_id, uint16_t product_id, bool keyEventsBool, bool touchEventsBool){
+    hidConn = new GraphitiConnectionHID(vendor_id, product_id); // Your COM port
+    if (!hidConn->open()) {
+        std::cerr << "Failed to open connection.\n";
+        return false;
+    }
+
+    setConnection(hidConn);
+    
+    startUpSequence(keyEventsBool, touchEventsBool);
+
+    return true;
+}
+
+void GraphitiExtension::startUpSequence(bool keyEventsBool, bool touchEventsBool) {
     startResponseThread();
     sleep(2);
 
@@ -43,11 +63,17 @@ bool GraphitiExtension::startUpVCP(std::string port, bool keyEventsBool, bool to
         setKeyEvent(keyEventsBool);
         sleep(2);
     }
-
-    return true;
 }
 
 void GraphitiExtension::shutDownVCP(bool keyEventsBool, bool touchEventsBool){
+    shutDownSequence("VCP", keyEventsBool, touchEventsBool);
+}
+
+void GraphitiExtension::shutDownHID(bool keyEventsBool, bool touchEventsBool){
+    shutDownSequence("HID", keyEventsBool, touchEventsBool);
+}
+
+void GraphitiExtension::shutDownSequence(std::string connection_type, bool keyEventsBool, bool touchEventsBool){
     if(touchEventsBool) {
         setTouchEvent(false);
         sleep(2);
@@ -61,11 +87,19 @@ void GraphitiExtension::shutDownVCP(bool keyEventsBool, bool touchEventsBool){
     clearDisplay();
     sleep(5);
 
-    vcpConn->close();
+    if(connection_type == "VCP") {
+        vcpConn->close();
+    } else {
+        hidConn->close();
+    }
 
     stopResponseThread();
 
-    delete vcpConn;
+    if(connection_type == "VCP") {
+        delete vcpConn;
+    } else {
+        delete hidConn;
+    }
 }
 
 void GraphitiExtension::keyLoop(

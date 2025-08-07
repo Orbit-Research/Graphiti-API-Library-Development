@@ -75,22 +75,43 @@ void Graphiti_API::getResponse() {
     auto res = conn_->read(1);
     if (res.empty()) {
         //No response
-        std::cerr << "Response Empty" << std::endl;
+        #ifdef DEBUG
+        //std::cerr << "Response Empty" << std::endl;
+        #endif
         return;
     }
     debugByte(res[0]);
+
+    #ifdef DEBUG
+    std::cerr << "Response Non-Empty" << std::endl;
+    #endif
+
+    //HID report ID handling
+    if(res[0] == 0x07 || res[0] == 0x08) {
+        res = conn_->read(1);
+        #ifdef DEBUG
+        std::cerr << "Report ID found" << std::endl;
+        #endif
+    }
     
+    //Checking for start of frame marker
     if (res[0] != 0x1B) {
+        #ifdef DEBUG
         std::cerr << "Missing start-of-frame marker" << std::endl;
+        #endif
         return;
     }
+    debugByte(res[0]);
+
+    //Reading command id byte
     auto cmd = conn_->read(1);
     if (cmd.empty()) {
         std::cerr << "command id byte not recieved" << std::endl;
         return;
     }
     debugByte(cmd[0]);
-    // Map command with response map
+
+    // Map command id with response map
     auto it = responseSelectFunc.find(cmd[0]);
     if (it != responseSelectFunc.end()) {
         it->second();
@@ -105,10 +126,10 @@ void Graphiti_API::setUpResponseMap() {
         {0x01, [this]() { readCommand(0x01, "readSoftwareVersion", "Software Version: ", 15); }},
         {0x02, [this]() { readCommand(0x02, "readHardwareVersion", "Hardware Version: ", 15); }},
         {0x04, [this]() { readCommand(0x04, "readSerialNumber", "Serial Number: ", 15); }},
-        {0x05, [this]() { readCommand(0x05, "readBatterStatus", "Battery Status: ", 15); }},
-        {0x07, [this]() { readCommand(0x07, "readResolution", "Resolution: ", 5); }},
-        {0x08, [this]() { readCommand(0x08, "readOrientation", "Orientation: ", 10); }},
-        {0x09, [this]() { readCommand(0x09, "readHeight", "Height: ", 1); }},
+        {0x05, [this]() { readCommand(0x05, "readBatteryStatus", "Battery Status: ", 15); }},
+        {0x07, [this]() { readCommand(0x07, "readResolutionInformation", "Resolution: ", 5); }},
+        {0x08, [this]() { readCommand(0x08, "readDeviceOrientation", "Orientation: ", 10); }},
+        {0x09, [this]() { readCommand(0x09, "readHeightInformation", "Height: ", 1); }},
         {0x0A, [this]() { readCommand(0x0A, "readDevicename", "Name: ", 30); }},
         {0x20, [this]() { readStatus(0x20, "readAllPixelsPositionStatus", 2400); }},
         {0x21, [this]() { readStatus(0x21, "readSinglePixelPositionStatus", 3); }},

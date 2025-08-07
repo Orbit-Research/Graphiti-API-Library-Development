@@ -372,6 +372,9 @@ _VCPKG_INSTALLED_DIR:PATH=C:/Users/Daniel/vcpkg/installed
 //The directory containing a CMake configuration file for asio.
 asio_DIR:PATH=C:/Users/Daniel/vcpkg/installed/x64-windows/share/asio
 
+//The directory containing a CMake configuration file for hidapi.
+hidapi_DIR:PATH=C:/Users/Daniel/vcpkg/installed/x64-windows/share/hidapi
+
 
 ########################
 # INTERNAL cache entries

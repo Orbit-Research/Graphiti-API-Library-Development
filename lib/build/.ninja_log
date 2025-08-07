@@ -1,9 +1,10 @@
 # ninja log v6
-45	6212	7757768463639718	CMakeFiles/Graphiti.dir/src/Extension.cpp.obj	b68ab84f549337f5
-52	6243	7757768463709769	CMakeFiles/Graphiti_C.dir/src/CWrapper/capi.cpp.obj	ee37ec2c91296369
-40	6980	7757768463604202	CMakeFiles/Graphiti.dir/src/API.cpp.obj	e998e79abfdb3d3c
-48	6992	7757768463679725	CMakeFiles/Graphiti.dir/src/Connection/Connection_VCP.cpp.obj	1f8df32ffdddf234
-6993	8298	7757768535307800	libGraphiti.dll	5911b21115b3b8ac
-6993	8298	7757768535307800	libGraphiti.dll.a	5911b21115b3b8ac
-8298	9055	7757768547294675	libGraphiti_C.dll	fb2acb5dfac40d58
-8298	9055	7757768547294675	libGraphiti_C.dll.a	fb2acb5dfac40d58
+46	5752	7762886648221607	CMakeFiles/Graphiti.dir/src/Connection/Connection_HID.cpp.obj	3a9e4eb60d507168
+38	7999	7762886648066606	CMakeFiles/Graphiti.dir/src/Extension.cpp.obj	ed8ce2ea744bde87
+53	8136	7762886648281216	CMakeFiles/Graphiti_C.dir/src/CWrapper/capi.cpp.obj	5c51ec76416f0c10
+34	8855	7762886648066606	CMakeFiles/Graphiti.dir/src/API.cpp.obj	a40b8d336a621c0f
+42	9138	7762886648066606	CMakeFiles/Graphiti.dir/src/Connection/Connection_VCP.cpp.obj	8f29c4e344869205
+9138	10792	7762886741315896	libGraphiti.dll	173add82c500bf7b
+9138	10792	7762886741315896	libGraphiti.dll.a	173add82c500bf7b
+10793	11802	7762886756739834	libGraphiti_C.dll	98e82ad5a716532e
+10793	11802	7762886756739834	libGraphiti_C.dll.a	98e82ad5a716532e

@@ -41,6 +41,22 @@ JNIEXPORT void JNICALL Java_binding_jgraphiti_Graphiti_shutDownVCP
 
 /*
  * Class:     binding_jgraphiti_Graphiti
+ * Method:    startUpHID
+ * Signature: (JIIZZ)Z
+ */
+JNIEXPORT jboolean JNICALL Java_binding_jgraphiti_Graphiti_startUpHID
+  (JNIEnv *, jobject, jlong, jint, jint, jboolean, jboolean);
+
+/*
+ * Class:     binding_jgraphiti_Graphiti
+ * Method:    shutDownHID
+ * Signature: (JZZ)V
+ */
+JNIEXPORT void JNICALL Java_binding_jgraphiti_Graphiti_shutDownHID
+  (JNIEnv *, jobject, jlong, jboolean, jboolean);
+
+/*
+ * Class:     binding_jgraphiti_Graphiti
  * Method:    index
  * Signature: (JII)I
  */

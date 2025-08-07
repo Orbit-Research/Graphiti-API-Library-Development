@@ -91,7 +91,7 @@ void ReadOuptputDemo() {
     graphiti->getSoftwareVersion();
     sleepAndOutput();
 
-    graphiti->getHardWareVersion();
+    graphiti->getHardwareVersion();
     sleepAndOutput();
 
     graphiti->getSerialNumber();
@@ -465,7 +465,11 @@ int main()
     graphiti = new GraphitiExtension();
 
 
-    if(!graphiti->startUpVCP("COM4", keyEvents, touchEvents)){
+    // if(!graphiti->startUpVCP("COM4", keyEvents, touchEvents)){
+    //     return 1;
+    // }
+
+    if(!graphiti->startUpHID(0x1FC9, 0x8217, keyEvents, touchEvents)){
         return 1;
     }
 
@@ -473,7 +477,7 @@ int main()
 
     //UpdatePixelsDemo();
 
-    GetStatusDemo();
+    //GetStatusDemo();
 
     //KeyDemo();
 
@@ -495,7 +499,9 @@ int main()
 
     std::cout << "__________________Shutting down__________________" << std::endl;
 
-    graphiti->shutDownVCP(keyEvents, touchEvents);
+    //graphiti->shutDownVCP(keyEvents, touchEvents);
+
+    graphiti->shutDownHID(keyEvents, touchEvents);
 
     delete graphiti;
     return 0;

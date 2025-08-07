@@ -7,6 +7,7 @@
 #include "API.hpp"
 
 #include <Graphiti/Connection/Connection_VCP.hpp>
+#include <Graphiti/Connection/Connection_HID.hpp>
 
 #ifdef _WIN32
   #ifdef BUILDING_GRAPHITI_DLL
@@ -47,22 +48,43 @@ public:
     ~GraphitiExtension();
 
     /**
-     * @brief Starts up VCP connection and turns on events
+     * @brief Starts up VCP connection and calls startUpSequence
      * 
      * @param port port name
      * @param keyEventsBool boolean for key events
+     * @param touchEventsBool boolean for touch events
      * @return true 
      * @return false 
      */
     bool startUpVCP(std::string port, bool keyEventsBool, bool touchEventsBool);
 
     /**
+     * @brief Starts up HID connection and calls startUpSequence
+     * 
+     * @param vendor_id 
+     * @param product_id 
+     * @param keyEventsBool 
+     * @param touchEventsBool 
+     * @return true 
+     * @return false 
+     */
+    bool startUpHID(uint16_t vendor_id, uint16_t product_id, bool keyEventsBool, bool touchEventsBool);
+
+    /**
      * @brief Shuts down VCP connection and turns of events
      * 
-     * @param port port name
      * @param keyEventsBool boolean for key events
+     * @param touchEventsBool boolean for touch events
      */
     void shutDownVCP(bool keyEventsBool, bool touchEventsBool);
+
+    /**
+     * @brief Shuts down VCP connection and turns of events
+     * 
+     * @param keyEventsBool boolean for key events
+     * @param touchEventsBool boolean for touch events
+     */
+    void shutDownHID(bool keyEventsBool, bool touchEventsBool);
 
     /**
      * @brief Screen indicies of pin heights
@@ -141,4 +163,30 @@ private:
      * Graphiti VCP conneciton object
      */
     GraphitiConnectionVCP* vcpConn = nullptr;
+
+    /**
+     * @brief HID connection
+     * 
+     * Graphiti HID conneciton object
+     */
+    GraphitiConnectionHID* hidConn = nullptr;
+
+    /**
+     * @brief Performs the startup sequence for different conneciton types
+     * 
+     * @param keyEventsBool 
+     * @param touchEventsBool 
+     * @return true success
+     * @return false failure
+     */
+    void startUpSequence(bool keyEventsBool, bool touchEventsBool);
+
+    /**
+     * @brief Performs the shutdown sequence for different conneciton types
+     * 
+     * @param connection_type 
+     * @param keyEventsBool 
+     * @param touchEventsBool 
+     */
+    void shutDownSequence(std::string connection_type, bool keyEventsBool, bool touchEventsBool);
 };

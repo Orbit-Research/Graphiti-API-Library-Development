@@ -1,7 +1,7 @@
 from ctypes import (
     CDLL, c_void_p, c_bool, c_int, c_char_p,
-    POINTER, Structure, c_uint8, c_size_t,
-    byref, create_string_buffer, cast
+    POINTER, Structure, c_uint8, c_size_t, c_uint16,
+    byref, create_string_buffer, cast, 
 )
 from typing import Optional, List, Dict, Union
 import os
@@ -63,6 +63,12 @@ class Graphiti:
         self._lib.graphiti_startUpVCP.restype = c_bool
         self._lib.graphiti_shutDownVCP.argtypes = [c_void_p, c_bool, c_bool]
         self._lib.graphiti_shutDownVCP.restype = None
+
+        # HID calls
+        self._lib.graphiti_startUpHID.argtypes = [c_void_p, c_uint16, c_uint16, c_bool, c_bool]
+        self._lib.graphiti_startUpHID.restype = c_bool
+        self._lib.graphiti_shutDownHID.argtypes = [c_void_p, c_bool, c_bool]
+        self._lib.graphiti_shutDownHID.restype = None
 
         # Extension
         self._lib.graphiti_index.argtypes = [c_void_p, c_int, c_int]
@@ -165,18 +171,11 @@ class Graphiti:
     def graphiti_create(self):
         self._handle = self._lib.graphiti_create()
 
-    def graphiti_create_with_connection(self, connection: c_void_p):
-        self._lib.graphiti_createWithConnection(connection)
-
     def __enter__(self):
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         self._lib.graphiti_destroy(self._handle)
-
-    # Handle management
-    def set_connection(self, connection: c_void_p):
-        self._lib.graphiti_setConnection(self._handle, connection)
 
     # VCP control
     def start_vcp(self, port: str, key_events: bool = True, touch_events: bool = True) -> bool:
@@ -189,6 +188,23 @@ class Graphiti:
 
     def shutdown_vcp(self, key_events: bool = True, touch_events: bool = True):
         self._lib.graphiti_shutDownVCP(
+            self._handle,
+            c_bool(key_events),
+            c_bool(touch_events)
+        )
+
+    # VCP control
+    def start_hid(self, vendor_id: int, product_id: int, key_events: bool = True, touch_events: bool = True) -> bool:
+        return self._lib.graphiti_startUpHID(
+            self._handle,
+            c_uint16(vendor_id),
+            c_uint16(product_id),
+            c_bool(key_events),
+            c_bool(touch_events)
+        )
+
+    def shutdown_hid(self, key_events: bool = True, touch_events: bool = True):
+        self._lib.graphiti_shutDownHID(
             self._handle,
             c_bool(key_events),
             c_bool(touch_events)

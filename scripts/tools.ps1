@@ -15,8 +15,7 @@ function clean {
 
 function configure {
     param (
-        [switch]$Debug,
-        [switch]$NoExtension
+        [switch]$Debug
     )
 
     Write-Host "Running configure..."
@@ -28,13 +27,8 @@ function configure {
         Write-Host "-Debug enabled"
     }
 
-    if ($NoExtension) {
-        $version += "-DUSE_EXTENSION=OFF"
-        Write-Host "-Extension disabled"
-    }
-
-    cmake -B build -S . @version
-    # cmake -G Ninja -B build -S . @version
+    #cmake -B build -S . @version
+    cmake -G Ninja -B build -S . @version
 }
 
 function build {
@@ -73,12 +67,6 @@ switch ($Action.ToLower()) {  # Makes comparison case-insensitive
     "standard_debug" {
         clean
         configure -Debug
-        build
-        run_Testing
-    }
-    "standard_noextension" {
-        clean
-        configure -NoExtension
         build
         run_Testing
     }
