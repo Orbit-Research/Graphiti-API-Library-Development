@@ -10,32 +10,43 @@ int main() {
         return 1;
     }
     
-    graphiti_startUpVCP(graphiti, "COM4", false, false);
+    // if(!graphiti_startUpVCP(graphiti, "COM4", false, false)) {
+    //     printf("Failed to connect");
+    //     return 1;
+    // }
 
-    Sleep(2000);
+    if(!graphiti_startUpHID(graphiti, 0x1FC9, 0x8217, false, false)) {
+        printf("Failed to connect");
+        return 1;
+    }
+
+    graphiti_sleep(graphiti,2);
 
     graphiti_getSoftwareVersion(graphiti);
 
-    Sleep(2000);
+    graphiti_sleep(graphiti,2);
 
     char* software_version;
     graphiti_getNextOutputEvent(graphiti, software_version, 100);
 
     printf(software_version);
 
-    Sleep(2000);
+    printf("\n");
+
+    graphiti_sleep(graphiti,2);
 
     graphiti_updateSinglePixel(graphiti, 10, 20, 2, 0);
 
-    Sleep(2000);
+    graphiti_sleep(graphiti,2);
 
     graphiti_updateSinglePixel(graphiti, 10, 20, 0, 0);
 
-    Sleep(2000);
+    graphiti_sleep(graphiti,2);
 
-    graphiti_shutDownVCP(graphiti, false, false);
+    // graphiti_shutDownVCP(graphiti, false, false);
+    graphiti_shutDownHID(graphiti, false, false);
 
-    Sleep(2000);
+    graphiti_sleep(graphiti,2);
 
     graphiti_destroy(graphiti);
 

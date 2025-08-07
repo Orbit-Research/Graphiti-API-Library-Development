@@ -15,4 +15,8 @@ java
 - compile_run.ps1 was use by me before I made runJava.ps1 in the examplej folder to test the java wrapper
 
 Library details
-- The Java library does not support the functions setConnection or createWithConnection due to the difficulties of passing the Connection object. This means that connections with the device must be made with startUpVCP where the connection is passed as a string. Functions like setConnection and createWithConnection could be made that use strings to keep this functionality. But since the connection classes for HID and Bluetooth are not currently developed, I felt it best to keep things this way for now until a function can be made in Connection that would work for all three connection types. Since this change to Connection would not add any funcitonality without HID and Bluetooth support I do not see it as a high priorty atm.
+- The Java library does not support the functions setConnection or createWithConnection due to the difficulties of passing the Connection object. This means that connections with the device must be made with startUp where the connection handled internally. Functions like setConnection and createWithConnection could be made that use strings to keep this functionality. But since the connection classes for  Bluetooth is not currently developed, I felt it best to keep things this way for now until a function can be made in Connection that would work for all three connection types (VCP, HID, and Bluetooth). Since this change to Connection would not add any funcitonality without Bluetooth support I do not see it as a high priorty atm.
+
+Using the code
+- use .\build.ps1 to build the library
+- 

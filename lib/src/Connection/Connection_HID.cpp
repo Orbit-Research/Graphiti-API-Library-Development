@@ -34,7 +34,7 @@ bool GraphitiConnectionHID::write(const std::vector<unsigned char>& data) {
     }
 
     std::vector<unsigned char> report(data.size() + 1);
-    report[0] = writeReportID(data); //Report ID
+    report[0] = 0x02; //Report ID
     std::copy(data.begin(), data.end(), report.begin() + 1);
 
     int result = hid_write(device_, report.data(), report.size());
@@ -47,15 +47,6 @@ bool GraphitiConnectionHID::write(const std::vector<unsigned char>& data) {
         return false;
     }
     return true;
-}
-
-unsigned char GraphitiConnectionHID::writeReportID (const std::vector<unsigned char>& data) {
-    std::unordered_set<uint8_t> allowed_values = {0x15, 0x18, 0x2F, 0x30};
-
-    if (allowed_values.count(data[1])) {
-        return 0x03;
-    }
-    return 0x02;
 }
 
 std::vector<unsigned char> GraphitiConnectionHID::read(size_t size) {

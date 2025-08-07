@@ -64,7 +64,7 @@ class Graphiti:
         self._lib.graphiti_shutDownVCP.argtypes = [c_void_p, c_bool, c_bool]
         self._lib.graphiti_shutDownVCP.restype = None
 
-        # HID
+        # HID calls
         self._lib.graphiti_startUpHID.argtypes = [c_void_p, c_uint16, c_uint16, c_bool, c_bool]
         self._lib.graphiti_startUpHID.restype = c_bool
         self._lib.graphiti_shutDownHID.argtypes = [c_void_p, c_bool, c_bool]
@@ -171,18 +171,11 @@ class Graphiti:
     def graphiti_create(self):
         self._handle = self._lib.graphiti_create()
 
-    def graphiti_create_with_connection(self, connection: c_void_p):
-        self._lib.graphiti_createWithConnection(connection)
-
     def __enter__(self):
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         self._lib.graphiti_destroy(self._handle)
-
-    # Handle management
-    def set_connection(self, connection: c_void_p):
-        self._lib.graphiti_setConnection(self._handle, connection)
 
     # VCP control
     def start_vcp(self, port: str, key_events: bool = True, touch_events: bool = True) -> bool:
