@@ -1,0 +1,23 @@
+TestFolder
+- Files in TestData folder are txt files used by the Test Harness
+- passedTests.txt and failedTests.txt hold the passed and failed test names
+- Any .txt file in TestData can be run using:
+    testHarness->runTestsFromFile(passedfile);
+- Running a single test can be done like so:
+    testHarness->runTest("clear_Display_Functionality")
+- There are shorthand constant strings in the top of TestHarness.cpp for runing test files easily
+
+- To exit the Key test press the select button
+- To exit the Draw test draw into the bottom right corner of the Graphiti Unit
+- The device must be in draw mode for the draw test to execute properly
+
+- Running any tests will write the failed and passed tests to their .txt files
+
+- The tests can be run by running:
+
+    .\scripts\tools.ps1 standard  
+
+        OR
+
+    .\scripts\tools.ps1 standard_debug
+
