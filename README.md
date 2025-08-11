@@ -13,6 +13,7 @@ Library containing API calls of the Graphiti by Orbit Research. Copyright © 202
 - C/C++ compiler (e.g., GCC, MSVC)
 - CMake (for building the library on your machine)
 - Python (for the python wrapper and use of it)
+- Java (for java wrapper and use of it)
 - Execution Policy must be RemoteSigned for the current user to run the ps1 script files (this can be changed by running Set-ExecutionPolicy.exe)
 
 ## Usage Details
@@ -66,21 +67,16 @@ Library containing API calls of the Graphiti by Orbit Research. Copyright © 202
 - binding 
     - includes folders for bindings of specific languages for the library and test files for running the library 
 
-    - The C folder includes main.c as the library should be compiled so that it has the C wrapper that allows use of C for the 
-        library
-        - capi.h 
-            - This is the header file for the C API of the library
-            - Need to write a script to copy the current capi.h to this directory
-        - This library was fully functional but needs to be tested due to the new changes for supporting the python library
+    - The C folder includes main.c as the library should be compiled so that it has the C wrapper that allows use of C for the library
+        - See README.md file in binding/C
 
-    - A java binding has currently not been written (7/25/2025)
+    - jgraphiti
+        - Java wrapper for the Graphiti library
+        - See README.md file in binding/jgraphiti
 
     - python
-        - Python is mostly functional with calls correctly
-        - capi.h 
-            - This is the header file for the C API of the library
-            - Need to write a script to copy the current capi.h to this directory
-        - 
+        - Python warpper for Graphiti library
+        - See README.md file in binding/python
 
 - build
     - contains the build of the library with any run file it was run most recently which is typically the tests from the 
@@ -230,28 +226,7 @@ Library containing API calls of the Graphiti by Orbit Research. Copyright © 202
 
 - TestFolder
     - Folder containing tests and the test harness
-
-    - TestData
-        - Folder containing txt files that have the test names for the test harness
-        - Files with specific test names can be used for running that set of tests
-        - passedTests.txt will always contain the passed tests from the most recent run and previous runs
-        - failedTests.txt will always contain the failed tests from the most recent run and previous runs
-        - Tests.txt includes all tests
-
-    - main.cpp
-        - Shows use of the test harness 
-
-    - TestHarness.hpp
-        - Test Harness header file
-
-    - TestHarness.cpp
-        - Test Harness function implementation
-
-    - Tests.hpp
-        - Tests header file
-
-    - Tests.cpp
-        - Implementation of the tests
+    - See README.md in TestFolder
 
 - .gitignore
     - Git ignore to ignore files to that have changes like my history folder 

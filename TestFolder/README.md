@@ -21,3 +21,25 @@ TestFolder
 
     .\scripts\tools.ps1 standard_debug
 
+## File Structure ##
+- TestData
+    - Folder containing txt files that have the test names for the test harness
+    - Files with specific test names can be used for running that set of tests
+    - passedTests.txt will always contain the passed tests from the most recent run and previous runs
+    - failedTests.txt will always contain the failed tests from the most recent run and previous runs
+    - Tests.txt includes all tests
+
+- main.cpp
+    - Shows use of the test harness 
+
+- TestHarness.hpp
+    - Test Harness header file
+
+- TestHarness.cpp
+    - Test Harness function implementation
+
+- Tests.hpp
+    - Tests header file
+
+- Tests.cpp
+        - Implementation of the tests

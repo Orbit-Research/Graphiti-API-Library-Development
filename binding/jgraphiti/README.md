@@ -19,4 +19,54 @@ Library details
 
 Using the code
 - use .\build.ps1 to build the library
-- 
+
+## Include path ##
+Add these to your include path with Ctrl+Shift+P
+    ${vcpkgRoot}/x64-windows/include
+    C:\Program Files\Java\jdk-20\include
+    C:\Program Files\Java\jdk-20\include\win32
+
+## File Structure ##
+- build
+    - Folder of current build
+- binding_jgraphiti_Graphiti.h
+    - Generated file from "javac -h . Graphiti.java"
+- build.ps1
+    - Deletes all dll files except hidapi.dll and pulls newest version from graphiti folder under user
+    - Deletes all .class files and rebuilds them from .java files for library
+- CMakeLists.txt
+    - CMake for the java library
+- compile_run.ps1
+    - Compiles all .java files then runs them with Main.java
+- copy-dll.ps1
+    - Copies the C++ dll to the directory from graphit folder under user
+- Graphiti-JNI.cpp
+    - JNI wrapper for Graphiti C++ library
+- Graphiti.class
+    - Compiled from Graphiti.java
+- Graphiti.java
+    - Graphiti header for JNI
+- Graphiti$DrawEvent.class
+    - Class file for DrawEvent
+- Graphiti$PinInfo.class
+    - Class file for PinInfo class
+- hidapi_winapi.h
+    - header file for hidapi
+- hidapi.dll
+    - dll file for hidapi library for connection over HID
+- hidapi.h
+    - header file for hidapi
+- internal_handle.hpp
+    - header file to have a handle for the Graphiti C++ class
+- libGraphiti.dll
+    - C++ compiled Graphiti dll
+- libGraphiti.dll.a
+    - header file for C++ compiled Graphiti dll
+- libGraphitJNI.dll
+    - compiled JNI dll
+- libGraphitiJNI.dll.a
+    - header for compiled JNI dll
+- Main.class
+    - Compiled Main.java
+- Main.java
+    - Test code for JNI graphiti library
