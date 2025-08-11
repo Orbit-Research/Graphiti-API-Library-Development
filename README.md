@@ -50,14 +50,7 @@ Library containing API calls of the Graphiti by Orbit Research. Copyright © 202
 - setConnectiona and creating the graphiti object with a connection in are not included in the python and java wrappers as they would not be callable since they take a GraphitiConnection Object. I think it could be possible using the C wrapper but it is also unnessecary as the startUp and shutDown calls already handle this well.
 - shutDown does clear the display when called which is realistically unnessecary as when turning the device off the pins do go down but it may be something to keep in mind if this is against any functionality someone has in mind for their program then the clear display can be removed
 - Since adding HID support the hidapi.dll has become a dependency of the Graphiti dll files so it must be present or added to the path in order for the Graphiti dll files to function
-- HID is not currently usable with the device as the display with some commands
-    - Since the commands in quesiton are display commands and the display is such a major part of using the graphiti HID is not currently recommended
-    - This is of no fault to the code because one can clearly see that if these commands are sent to the device that the device responds that the command was successful yet the command does not display
-    - Commands:
-        - updateDisplay()
-        - updateSingleRow()
-        - updateSingleColumn()
--  
+- HID is fully supported using startUpHID
 
 ## Folder Structure
 
