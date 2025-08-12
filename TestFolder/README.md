@@ -21,6 +21,12 @@ TestFolder
 
     .\scripts\tools.ps1 standard_debug
 
+## Notes ##
+
+- Some test may need to be updated to your exact software version hardware version etc. due to the test matching exactly against the specified string output
+    - This can be done in Tests.cpp
+- Test can be set to VCP or HID by changing the startTesting function in Tests.cpp to use startUpHID or startUpVCP and shutDownVCP or shutDownHID which are commented out. One must also change the COM port for VCP and alternatively change the HID numbers if they have changed
+
 ## File Structure ##
 - TestData
     - Folder containing txt files that have the test names for the test harness

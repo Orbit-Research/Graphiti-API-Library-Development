@@ -9,13 +9,13 @@ Run with:
 ## Usage ##
 
 To use the C wrapper first compile the lib Graphiti C using install_library_vcpkg.ps1
-The copy the lib files using copy-files.ps1
+The copy the lib files using copy-files.ps1 from the binding\C directory
 Build with build.ps1
 Run the text.exe file
 
 ## Dependencies ##
 - hidapi.dll
-- libGraphiti_C.dll
+- libGraphiti_C.dll (The C wrapper only works with Single Config of a .dll)
 - capi.h
 
 ## File Structure ##

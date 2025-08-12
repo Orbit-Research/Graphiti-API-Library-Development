@@ -41,6 +41,8 @@ class Graphiti:
         #print("dll_dir: " + dll_dir)
         os.add_dll_directory(dll_dir)
         dll_path = os.path.join(dll_dir, "libGraphiti_C.dll")
+        if not os.path.exists(dll_path):
+            dll_path = os.path.join(dll_dir, "Graphiti_C.dll")
         try:
             self._lib = CDLL(dll_path,winmode=0)
         except Exception as e:

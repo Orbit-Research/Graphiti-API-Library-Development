@@ -19,14 +19,22 @@ function Copy-ToCurrentDirectory {
 
 # Copy DLL
 $dllSuccess = Copy-ToCurrentDirectory -FileName "libGraphiti.dll" -SourcePath "$env:USERPROFILE\graphiti\bin\libGraphiti.dll"
-$dllSuccess = Copy-ToCurrentDirectory -FileName "libGraphiti.dll.a" -SourcePath "$env:USERPROFILE\graphiti\lib\libGraphiti.dll.a"
+$dllHeader = Copy-ToCurrentDirectory -FileName "libGraphiti.dll.a" -SourcePath "$env:USERPROFILE\graphiti\lib\libGraphiti.dll.a"
+
+# Copy Mult-Config DLL
+$dllSuccessMC = Copy-ToCurrentDirectory -FileName "Graphiti_C.dll" -SourcePath "$env:USERPROFILE\graphiti\bin\Graphiti_C.dll"
+$dllHeaderMC = Copy-ToCurrentDirectory -FileName "Graphiti_C.lib" -SourcePath "$env:USERPROFILE\graphiti\lib\Graphiti_C.lib"
 
 # Copy hidapi
-$headerSuccess = Copy-ToCurrentDirectory -FileName "hidapi.dll" -SourcePath "$env:USERPROFILE\vcpkg\installed\x64-windows\bin\hidapi.dll"
-$headerSuccess = Copy-ToCurrentDirectory -FileName "hidapi.h" -SourcePath "$env:USERPROFILE\vcpkg\installed\x64-windows\include\hidapi\hidapi.h"
-$headerSuccess = Copy-ToCurrentDirectory -FileName "hidapi_winapi.h" -SourcePath "$env:USERPROFILE\vcpkg\installed\x64-windows\include\hidapi\hidapi_winapi.h"
+$hidSucessDLL = Copy-ToCurrentDirectory -FileName "hidapi.dll" -SourcePath "$env:USERPROFILE\vcpkg\installed\x64-windows\bin\hidapi.dll"
+$hidSucessH = Copy-ToCurrentDirectory -FileName "hidapi.h" -SourcePath "$env:USERPROFILE\vcpkg\installed\x64-windows\include\hidapi\hidapi.h"
+$hidSucessWINH = Copy-ToCurrentDirectory -FileName "hidapi_winapi.h" -SourcePath "$env:USERPROFILE\vcpkg\installed\x64-windows\include\hidapi\hidapi_winapi.h"
 
-if (-not $dllSuccess -or -not $headerSuccess -or -not $headerSuccess) {
-    Write-Host "One or more copying failed"
+if (-not $dllSuccess -or -not $dllHeader -or -not $dllSuccessMC -or -not $dllHeaderMC -or -not 
+$hidSucessDLL  -or -not $hidSucessH  -or -not $hidSucessWINH) {
+    Write-Host "One or more copying failed. Please check that nessecary files have copied"
+    Write-Host "Single config creates libGraphiti.dll and libGraphiti.dll.a"
+    Write-Host "Multi config creates Graphiti_C.dll and Graphiti_C.lib"
+    Write-Host "One or the other is fine"
     exit 1
 }

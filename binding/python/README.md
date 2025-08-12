@@ -3,9 +3,9 @@ python wrapper
 
 ## Usage ##
 
-Compile the library using install_library_vcpkg.ps1 
-Copy files using using copy-dll-C.ps1
-Run using run.ps1 or a similar command
+Compile the library using install_library_vcpkg.ps1 (Ignore this step if already done)
+Copy files from the compiled library on your computer using using copy-dll-C.ps1 by running from the binding\python directory
+Run using run.ps1 or a similar command to run your code
 
 ## File Structure ##
 - copy-dll-C.ps1
@@ -17,6 +17,8 @@ Run using run.ps1 or a similar command
     - Dependency of libGraphiti_C.dll
 - libGraphiti.dll
     - Compiled library for the Graphiti
+- Graphiti.dll
+    - Compiled library for the Graphiti from Mult-Config
 - run.ps1
     - Run script for convience
 - test.py

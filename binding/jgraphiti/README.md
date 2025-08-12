@@ -20,7 +20,9 @@ Library details
 ## Usage ##
 
 To use the C wrapper first compile the lib Graphiti C using install_library_vcpkg.ps1
-Copy dlls and build using build.ps1
+Copy dlls and build using build.ps1 by running from the binding\jgraphiti directory
+If using Multi-Config ei Graphiti.lib and Graphiti.dll then change the top of Graphiti-JNI.cpp on line 7 to use Graphiti.lib instead of libGraphiti.dll.a 
+If using Single-Config use libGraphiti.dll.a on line 7
 Note: The Java wrapper requires all header files of the library thus it cannot be run without them in the current director and or added to the visual studio include path.
 Then compile and run using compile_run.ps1
 

@@ -4,7 +4,7 @@
 #include "binding_jgraphiti_Graphiti.h"           // auto-generated JNI header
 #include "internal_handle.hpp"
 
-#pragma comment(lib, "libGraphiti.lib")
+#pragma comment(lib, "libGraphiti.dll.a")
 
 std::string jstringToString(JNIEnv* env, jstring jstr) {
     if (!jstr) return "";

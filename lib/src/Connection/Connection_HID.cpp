@@ -1,6 +1,10 @@
 #include <Graphiti/Connection/Connection_HID.hpp>
 #include <iostream>
+#ifndef NOMINMAX
+#define NOMINMAX
+#endif
 #include <windows.h>
+#include <algorithm>
 
 GraphitiConnectionHID::GraphitiConnectionHID(const uint16_t vendor_id, const uint16_t product_id)
     : vendor_id_(vendor_id), product_id_(product_id), device_(nullptr) {

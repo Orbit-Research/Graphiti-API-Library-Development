@@ -6,17 +6,17 @@ int main() {
     GraphitiHandle* graphiti = graphiti_create();
 
     if(!graphiti) {
-        printf("Failed to connect");
+        printf("Failed to connect\n");
         return 1;
     }
     
     // if(!graphiti_startUpVCP(graphiti, "COM4", false, false)) {
-    //     printf("Failed to connect");
+    //     printf("Failed to connect\n");
     //     return 1;
     // }
 
     if(!graphiti_startUpHID(graphiti, 0x1FC9, 0x8217, false, false)) {
-        printf("Failed to connect");
+        printf("Failed to connect\n");
         return 1;
     }
 
