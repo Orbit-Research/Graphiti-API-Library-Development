@@ -6,6 +6,13 @@ Run with:
 
 .\test.exe
 
+## Usage ##
+
+To use the C wrapper first compile the lib Graphiti C using install_library_vcpkg.ps1
+The copy the lib files using copy-files.ps1
+Build with build.ps1
+Run the text.exe file
+
 ## Dependencies ##
 - hidapi.dll
 - libGraphiti_C.dll

@@ -17,8 +17,12 @@ java
 Library details
 - The Java library does not support the functions setConnection or createWithConnection due to the difficulties of passing the Connection object. This means that connections with the device must be made with startUp where the connection handled internally. Functions like setConnection and createWithConnection could be made that use strings to keep this functionality. But since the connection classes for  Bluetooth is not currently developed, I felt it best to keep things this way for now until a function can be made in Connection that would work for all three connection types (VCP, HID, and Bluetooth). Since this change to Connection would not add any funcitonality without Bluetooth support I do not see it as a high priorty atm.
 
-Using the code
-- use .\build.ps1 to build the library
+## Usage ##
+
+To use the C wrapper first compile the lib Graphiti C using install_library_vcpkg.ps1
+Copy dlls and build using build.ps1
+Note: The Java wrapper requires all header files of the library thus it cannot be run without them in the current director and or added to the visual studio include path.
+Then compile and run using compile_run.ps1
 
 ## Include path ##
 Add these to your include path with Ctrl+Shift+P

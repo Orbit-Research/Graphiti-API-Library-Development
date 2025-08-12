@@ -1,9 +1,15 @@
 python wrapper
 - Any python code can use the python wrapper by running with the libGraphiti_C.dll and graphiti.py
 
+## Usage ##
+
+Compile the library using install_library_vcpkg.ps1 
+Copy files using using copy-dll-C.ps1
+Run using run.ps1 or a similar command
+
 ## File Structure ##
 - copy-dll-C.ps1
-    - Script to copy the libGraphiti_C.dll file to the current directory from graphit folder under user
+    - Script to copy the libGraphiti_C.dll and hidapi.dll files to the current directory from graphit folder under user
 - graphiti.py
     - Wrapper for the Graphiti library using ctypes
 - hidapi.dll
