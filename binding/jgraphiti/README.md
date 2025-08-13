@@ -32,6 +32,19 @@ Add these to your include path with Ctrl+Shift+P
     C:\Program Files\Java\jdk-20\include
     C:\Program Files\Java\jdk-20\include\win32
 
+## Dependencies ##
+- hidapi.dll
+- hidapi.h
+- hidapi_winapi.h
+- libGraphiti_C.dll (The C wrapper only works with Single Config of a .dll)
+- libGraphiti_C.dll.a
+For Multi-Config
+- Graphiti_C.dll
+- Graphiti_C.lib
+Header files of library
+    - Add to configuration or include path(Ctrl + Shift + P for C/C++):
+    ${env:USERPROFILE}\graphiti\include
+
 ## File Structure ##
 - build
     - Folder of current build

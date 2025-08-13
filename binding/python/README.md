@@ -23,3 +23,13 @@ Run using run.ps1 or a similar command to run your code
     - Run script for convience
 - test.py
     - File for showing the use of the graphiti python library
+
+## Dependencies ##
+- hidapi.dll
+- hidapi.h
+- hidapi_winapi.h
+- libGraphiti_C.dll (The C wrapper only works with Single Config of a .dll)
+- libGraphiti_C.dll.a
+For Multi-Config
+- Graphiti_C.dll
+- Graphiti_C.lib

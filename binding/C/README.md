@@ -19,8 +19,14 @@ When using the api calls in C for the output calls, these calls will require pro
 
 ## Dependencies ##
 - hidapi.dll
+- hidapi.h
+- hidapi_winapi.h
 - libGraphiti_C.dll (The C wrapper only works with Single Config of a .dll)
+- libGraphiti_C.dll.a
 - capi.h
+For Multi-Config
+- Graphiti_C.dll
+- Graphiti_C.lib
 
 ## File Structure ##
 - .vscode
