@@ -26,10 +26,13 @@ int main() {
 
     graphiti_sleep(graphiti,2);
 
-    char* software_version;
+    char software_version[100];
     graphiti_getNextOutputEvent(graphiti, software_version, 100);
-
-    printf(software_version);
+    if(software_version[0] == '\0') {
+        printf("No output");
+    } else {
+        printf(software_version);
+    }
 
     printf("\n");
 

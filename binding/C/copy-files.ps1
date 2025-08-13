@@ -17,22 +17,30 @@ function Copy-ToCurrentDirectory {
     return $true
 }
 
-# Copy DLL
-$dllSuccess = Copy-ToCurrentDirectory -FileName "libGraphiti_C.dll" -SourcePath "$env:USERPROFILE\graphiti\bin\libGraphiti_C.dll"
-
-# Copy Mult-Config DLL
-$dllSuccessMC = Copy-ToCurrentDirectory -FileName "Graphiti_C.dll" -SourcePath "$env:USERPROFILE\graphiti\bin\Graphiti_C.dll"
-
 # Copy Header
 $headerSuccess = Copy-ToCurrentDirectory -FileName "capi.h" -SourcePath "$env:USERPROFILE\graphiti\include\Graphiti\CWrapper\capi.h"
 
-# Copy hidapi
-$headerSuccess = Copy-ToCurrentDirectory -FileName "hidapi.dll" -SourcePath "$env:USERPROFILE\vcpkg\installed\x64-windows\bin\hidapi.dll"
+# Copy DLL
+$dllSuccess = Copy-ToCurrentDirectory -FileName "libGraphiti.dll" -SourcePath "$env:USERPROFILE\graphiti\bin\libGraphiti.dll"
+$dllHeader = Copy-ToCurrentDirectory -FileName "libGraphiti.dll.a" -SourcePath "$env:USERPROFILE\graphiti\lib\libGraphiti.dll.a"
 
-if (-not $dllSuccess -or -not $dllSuccessMC -or -not $headerSuccess -or -not $headerSuccess) {
-    Write-Host "One or more copying failed"
-    Write-Host "Single config creates libGraphiti.dll"
-    Write-Host "Multi config creates Graphiti_C.dll"
+# Copy Mult-Config DLL
+$dllSuccessMC = Copy-ToCurrentDirectory -FileName "Graphiti_C.dll" -SourcePath "$env:USERPROFILE\graphiti\bin\Graphiti_C.dll"
+$dllHeaderMC = Copy-ToCurrentDirectory -FileName "Graphiti_C.lib" -SourcePath "$env:USERPROFILE\graphiti\lib\Graphiti_C.lib"
+
+# Copy hidapi
+$hidSucessDLL = Copy-ToCurrentDirectory -FileName "hidapi.dll" -SourcePath "$env:USERPROFILE\vcpkg\installed\x64-windows\bin\hidapi.dll"
+$hidSucessH = Copy-ToCurrentDirectory -FileName "hidapi.h" -SourcePath "$env:USERPROFILE\vcpkg\installed\x64-windows\include\hidapi\hidapi.h"
+$hidSucessWINH = Copy-ToCurrentDirectory -FileName "hidapi_winapi.h" -SourcePath "$env:USERPROFILE\vcpkg\installed\x64-windows\include\hidapi\hidapi_winapi.h"
+
+if (-not $headerSuccess -or -not $dllSuccess -or -not $dllHeader -or -not 
+$hidSucessDLL  -or -not $hidSucessH  -or -not $hidSucessWINH) {
+    Write-Host "One or more copying failed. Please check that nessecary files have copied"
+    Write-Host "Single config creates libGraphiti.dll and libGraphiti.dll.a"
     Write-Host "One or the other is fine"
     exit 1
+}
+
+if (-not $dllSuccessMC -or -not $dllHeaderMC) {
+    Write-Host "Multi-Config files not copied: Non-issue if using Single-Config"
 }

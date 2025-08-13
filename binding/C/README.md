@@ -13,6 +13,10 @@ The copy the lib files using copy-files.ps1 from the binding\C directory
 Build with build.ps1
 Run the text.exe file
 
+## Commands Notes ##
+
+When using the api calls in C for the output calls, these calls will require providing a buffer and size of that buffer as done in main.c with software_version in order to recieve the data. String buffers are called out* while other kinds of buffers are called buffer. getNextDrawEvent returns the data is PinInfo and returns the count of the PinInfo's. Display status events will output their pin data as the height followed by the blink rate in the order of that return function. Column returns 1 to 40, Row returns 1 to 60, and all will return 1 to 2400 left to right, top to bottom.
+
 ## Dependencies ##
 - hidapi.dll
 - libGraphiti_C.dll (The C wrapper only works with Single Config of a .dll)

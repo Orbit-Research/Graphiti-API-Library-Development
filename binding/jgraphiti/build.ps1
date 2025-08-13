@@ -6,8 +6,8 @@ Get-ChildItem -Path . -Filter *.dll -Recurse |
 Where-Object { $_.Name -ne 'hidapi.dll' } |
 Remove-Item -Force -ErrorAction SilentlyContinue
 
-# Copy dll
-.\copy-dll.ps1
+# Copy dlls
+.\copy-files.ps1
 
 # Remove JNI headers
 Remove-Item -Force -Recurse -ErrorAction SilentlyContinue .\Graphiti.class, '.\Graphiti$DrawEvent.class', '.\Graphiti$PinInfo.class', .\binding_jGraphiti_Graphiti.h
