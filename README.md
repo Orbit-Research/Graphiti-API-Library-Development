@@ -1,12 +1,12 @@
 # Graphiti API Library
 
-Library containing API calls of the Graphiti by Orbit Research. Copyright © 2025 Advanced Research and Development. All Rights Reserved.
+Library containing API calls of the Graphiti by Orbit Research. Copyright © 2025 Orbit Research. All Rights Reserved.
 
 ## Features
 
-- Easy-to-use C API for controlling Graphiti
+- Easy-to-use C/C++ API for controlling Graphiti
 - Supports tactile rendering, pin control, and device status queries
-- Compatible with Windows and Linux
+- Compatible with Windows
 
 ## Requirements
 
