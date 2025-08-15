@@ -13,6 +13,8 @@ TestFolder
 
 - Running any tests will write the failed and passed tests to their .txt files
 
+- Note: The tools.ps1 scripts use Ninja. Please use the equaivalent commands in scripts/tools.ps1 to build your code if you are not using Ninja.
+
 - The tests can be run by running:
 
     .\scripts\tools.ps1 standard  

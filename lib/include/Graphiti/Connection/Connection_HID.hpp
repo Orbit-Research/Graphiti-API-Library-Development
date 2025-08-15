@@ -25,6 +25,8 @@ private:
 
     std::deque<uint8_t> byteBuffer_;
 
+    bool writeAndErrorcheck (const std::vector<unsigned char>& report);
+
     unsigned char writeReportID (const std::vector<unsigned char>& data);
 
     void readToBuffer();

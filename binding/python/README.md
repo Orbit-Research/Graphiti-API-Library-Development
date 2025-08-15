@@ -3,7 +3,8 @@ python wrapper
 
 ## Usage ##
 
-Compile the library using install_library_vcpkg.ps1 (Ignore this step if already done)
+Please make sure to follow the Graphiti Setup guide document in the documents folder before contining.
+
 Copy files from the compiled library on your computer using using copy-files.ps1 by running from the binding\python directory
 Run using run.ps1 or a similar command to run your code
 

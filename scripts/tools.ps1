@@ -27,32 +27,65 @@ function configure {
         Write-Host "-Debug enabled"
     }
 
-    #cmake -B build -S . @version
-    cmake -G Ninja -B build -S . @version
+    cmake -B build -S . @version
 }
 
 function build {
+    param (
+        [string]$Config = ""
+    )
+
     Write-Host "Running build with changes..."
-    ninja -C build
+
+    if ($Config) {
+        cmake --build build --config $Config
+    } else {
+        cmake --build build
+    }
 }
 
 function run_ExtensionTest {
-    Write-Host "Running current build"
-    .\build\ExtensionTest.exe
+    param (
+        [string]$Config = ""
+    )
+
+    Write-Host "Running current build (ExtensionTest)"
+
+    $exePath = if ($Config) { ".\build\$Config\ExtensionTest.exe" } else { ".\build\ExtensionTest.exe" }
+
+    if (Test-Path $exePath) {
+        & $exePath
+    } else {
+        Write-Host "Error: $exePath not found."
+    }
 }
 
 function run_Testing {
-    Write-Host "Running current build"
-    .\build\Testing.exe
+    param (
+        [string]$Config = ""
+    )
+
+    Write-Host "Running current build (Testing)"
+
+    $exePath = if ($Config) { ".\build\$Config\Testing.exe" } else { ".\build\Testing.exe" }
+
+    if (Test-Path $exePath) {
+        & $exePath
+    } else {
+        Write-Host "Error: $exePath not found."
+    }
 }
 
-switch ($Action.ToLower()) {  # Makes comparison case-insensitive
+switch ($Action.ToLower()) {
     "clean" { clean }
     "configure" { configure }
     "configure_debug"{ configure -Debug }
     "build" { build }
-    "run_Extension" { run_ExtensionTest }
-    "run_Testing" { run_Testing }
+    "build_debug" { build -Config Debug }
+    "run_extension" { run_ExtensionTest }
+    "run_extension_debug" { run_ExtensionTest -Config Debug }
+    "run_testing" { run_Testing }
+    "run_testing_debug" { run_Testing -Config Debug }
     "full_build" {
         clean
         configure
@@ -67,23 +100,25 @@ switch ($Action.ToLower()) {  # Makes comparison case-insensitive
     "standard_debug" {
         clean
         configure -Debug
-        build
-        run_Testing
+        build -Config Debug
+        run_Testing -Config Debug
     }
     "buildrun" {
         build
         run_Testing
     }
+    "buildrun_debug" {
+        build -Config Debug
+        run_Testing -Config Debug
+    }
     "all" {
         clean
         configure -Debug
-        build
-        run_Testing
+        build -Config Debug
+        run_Testing -Config Debug
     }
     default {
-        Write-Host "Error: Unknown action '$Action'. Valid options: 'clean', 
-        'configure', 'configure_debug', 'build', 'run', 'cleanConfigureBuild', 
-        'standard', 'standard_debug', 'standard_extension', 'all'"
+        Write-Host "Error: Unknown action '$Action'."
         exit 1
     }
 }

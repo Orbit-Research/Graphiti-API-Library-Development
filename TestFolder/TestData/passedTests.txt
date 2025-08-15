@@ -1,2 +1,0 @@
-send_Image_Functionality
-clear_Display_Functionality

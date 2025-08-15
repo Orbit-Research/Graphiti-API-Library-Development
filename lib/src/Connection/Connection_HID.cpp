@@ -5,6 +5,7 @@
 #endif
 #include <windows.h>
 #include <algorithm>
+#include <iomanip>
 
 GraphitiConnectionHID::GraphitiConnectionHID(const uint16_t vendor_id, const uint16_t product_id)
     : vendor_id_(vendor_id), product_id_(product_id), device_(nullptr) {
@@ -37,10 +38,41 @@ bool GraphitiConnectionHID::write(const std::vector<unsigned char>& data) {
         return false;
     }
 
-    std::vector<unsigned char> report(data.size() + 1);
-    report[0] = 0x02; //Report ID
-    std::copy(data.begin(), data.end(), report.begin() + 1);
+    const size_t REPORT_SIZE = 4864;
+    unsigned char REPORT_ID = writeReportID(data);
 
+    std::vector<unsigned char> report;
+
+    bool result = true;
+
+    if(data[1] == 0x2F || data[1] == 0x30) {
+        size_t offset = 0;
+        while (offset < data.size()) {
+            size_t chunk_len = std::min(REPORT_SIZE - 1, data.size() - offset);
+
+            // Allocate buffer for Report ID + chunk
+            std::vector<unsigned char> report(REPORT_SIZE, 0);
+            report[0] = REPORT_ID; // first byte is the Report ID
+            std::copy(data.begin() + offset, data.begin() + offset + chunk_len, report.begin() + 1);
+
+            if(!writeAndErrorcheck(report)) {
+                return false;
+            }
+
+            offset += chunk_len;
+        }
+    } else {
+        report.reserve(data.size() + 1);
+        report.push_back(REPORT_ID);
+        report.insert(report.end(), data.begin(), data.end());
+
+        result = writeAndErrorcheck(report);
+    }
+
+    return result;
+}
+
+bool GraphitiConnectionHID::writeAndErrorcheck (const std::vector<unsigned char>& report) {
     int result = hid_write(device_, report.data(), report.size());
     if (result < 0) {
         const wchar_t* error_message = hid_error(device_);
@@ -52,6 +84,16 @@ bool GraphitiConnectionHID::write(const std::vector<unsigned char>& data) {
     }
     return true;
 }
+
+unsigned char GraphitiConnectionHID::writeReportID (const std::vector<unsigned char>& data) {
+    std::unordered_set<uint8_t> cmdID_List = {0x15, 0x18, 0x19, 0x2F, 0x30};
+
+    if (cmdID_List.count(data[1])) {
+        return 0x03;
+    }
+    return 0x02;
+}
+
 
 std::vector<unsigned char> GraphitiConnectionHID::read(size_t size) {
     std::vector<uint8_t> output;
@@ -71,11 +113,12 @@ std::vector<unsigned char> GraphitiConnectionHID::read(size_t size) {
 }
 
 void GraphitiConnectionHID::readToBuffer() {
-    std::vector<uint8_t> report(64);
+    std::vector<uint8_t> report(4864);
     int result = hid_read(device_, report.data(), report.size());
+
     if (result <= 0) return;
 
-    for (int i = 0; i < result; ++i) {
+    for (int i = 1; i < result; ++i) {
         byteBuffer_.push_back(report[i]);
     }
 }

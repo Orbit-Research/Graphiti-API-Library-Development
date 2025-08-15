@@ -85,14 +85,6 @@ void Graphiti_API::getResponse() {
     #ifdef DEBUG
     std::cerr << "Response Non-Empty" << std::endl;
     #endif
-
-    //HID report ID handling
-    if(res[0] == 0x07 || res[0] == 0x08) {
-        res = conn_->read(1);
-        #ifdef DEBUG
-        std::cerr << "Report ID found" << std::endl;
-        #endif
-    }
     
     //Checking for start of frame marker
     if (res[0] != 0x1B) {
@@ -637,6 +629,7 @@ void Graphiti_API::Graphiti_IO_Write(std::vector<uint8_t> bytes) {
     bytes.insert(bytes.begin(), 0x1B); //Adds Header
 
     #ifdef DEBUG
+        std::cerr << "Sending: "; 
         printVectorHex(bytes);
     #endif
     

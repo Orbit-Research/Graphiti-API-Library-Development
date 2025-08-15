@@ -4,7 +4,7 @@ param(
 )
 
 # Commands for building library with library CMakeLists.txt
-Remove-Item -Recurse -Force .\build\
+Remove-Item -Recurse -Force .\build\ -ErrorAction SilentlyContinue
 
 $cmakeArgs = @("-S", ".", "-B", "build", "-DCMAKE_BUILD_TYPE=Release")
 

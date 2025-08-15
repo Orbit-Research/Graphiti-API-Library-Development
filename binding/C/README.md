@@ -8,7 +8,8 @@ Run with:
 
 ## Usage ##
 
-To use the C wrapper first compile the lib Graphiti C using install_library_vcpkg.ps1
+Please make sure to follow the Graphiti Setup guide document in the documents folder before contining.
+
 The copy the lib files using copy-files.ps1 from the binding\C directory
 Build with build.ps1
 Run the text.exe file

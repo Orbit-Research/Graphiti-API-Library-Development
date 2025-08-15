@@ -27,9 +27,10 @@ int main()
     //testHarness->runTestsFromFile(passedfile);
 
     //Single test
-    testHarness->runTest("clear_Display_Functionality");
+    //testHarness->runTest("update_Single_Column_Functionality");
 
-    //testHarness->runTestsFromFile(imageTests);
+    //Group of tests using a file
+    testHarness->runTestsFromFile(statusTests);
 
     return 0;
 }

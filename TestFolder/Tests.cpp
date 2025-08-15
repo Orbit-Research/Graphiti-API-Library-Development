@@ -464,7 +464,7 @@ std::vector<uint8_t> Tests::UpdateRow(uint8_t row) {
     }
 
     graphiti->updateSingleRow(row, rowData);
-    graphiti->sleep(2);
+    graphiti->sleep(4);
 
     pinHeightsForTest.insert(pinHeightsForTest.begin(), row);
 
