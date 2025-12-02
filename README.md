@@ -1,4 +1,4 @@
-# Graphiti API Library
+# Graphiti API Library 
 
 Library containing API calls of the Graphiti by Orbit Research. Copyright © 2025 Orbit Research. All Rights Reserved.
 
